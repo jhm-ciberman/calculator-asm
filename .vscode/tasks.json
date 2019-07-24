@@ -30,7 +30,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Build FASM Console",
+			"label": "Build FASM Logic",
 			"type": "shell",
 			"command": "fasm ${workspaceFolder}/src/main-logic.asm ${workspaceFolder}/calc.exe",
 			"presentation": {
