@@ -32,7 +32,7 @@
 		{
 			"label": "Build FASM Console",
 			"type": "shell",
-			"command": "fasm ${workspaceFolder}/src/main-console.asm ${workspaceFolder}/calc.exe",
+			"command": "fasm ${workspaceFolder}/src/main-logic.asm ${workspaceFolder}/calc.exe",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
