@@ -1,64 +1,43 @@
 ;-----------------------------------------------
 ; Arquitectura de Computadores I
 ; 
-; Calculadora Postfijo
+; Calculadora en Postfijo
 ;-----------------------------------------------
 
-format PE
+
+; + los dos valores al tope de la pila, los retira y luego apila el resultado.-resta los valores al tope de la pila
+; * multiplica los valores
+; / divide los valores (resultado entero)
+; % obtiene el resto de la division
+; OR realiza el OR logico.
+; AND realiza en AND logico.
+; XOR realiza el or exclusivo
+; NOT realiza el not al tope de la pila
+; NEG niega el tope de la pila
+
+format PE64 console
 entry main
 
 section '.text' code readable executable
 
+
+include 'win64a.inc'
+include "logic/NewString.asm"
+
 main:
-	push	_hello
-	call	[printf]
-	add	esp, 4
+	sub	rsp,8		; Make stack dqword aligned
 
-	push	num1
-	push	_format_input
-	call	[scanf]
-	add	esp, 8
+;	call ExitProcess
+;	call [ExitProcess]
+	invoke exit
 
-	push	_prompt2
-	call	[printf]
-	add	esp, 4
-
-	push	num2
-	push	_format_input
-	call	[scanf]
-	add	esp, 8
-
-	mov	eax, [num1]
-	add	eax, [num2]
-	shr	eax, 1
-
-	push	eax
-	push	_format_output
-	call	[printf]
-	add	esp, 8
-
-	push	num1
-	push	_format_input
-	call	[scanf]
-	add	esp, 8
-
-	push	0
-	call	[exit]
 	ret
 
 section '.data' data readable writeable
 
-_hello		db "numero 1:",0
-_prompt2	db "numero 2:",0
-_format_input	db "%d",0
-_format_output	db "Resultado= %d",10,0
-
-num1		dd ?
-num2		dd ?
+	
 
 section '.idata' data import readable
-
-include "macro\import32.inc"
 
 library msvcrt, "MSVCRT.DLL"
 
