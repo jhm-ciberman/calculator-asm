@@ -1,7 +1,7 @@
 ;-----------------------------------------------
-; Fundamentos de arquitectura de computadoras
-; Uso de la consola para entrada/salida
-; PHREDA - FASTA 2013
+; Arquitectura de Computadores I
+; 
+; Calculadora Postfijo
 ;-----------------------------------------------
 
 format PE
