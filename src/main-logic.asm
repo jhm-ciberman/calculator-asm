@@ -1,82 +1,69 @@
+;-----------------------------------------------
+; Fundamentos de arquitectura de computadoras
+; Uso de la consola para entrada/salida
+; PHREDA - FASTA 2013
+;-----------------------------------------------
 
-format PE64 GUI 5.0
-entry start
-
-include 'win64a.inc'
+format PE
+entry main
 
 section '.text' code readable executable
 
-  start:
-	sub	rsp,8		; Make stack dqword aligned
+main:
+	push	_hello
+	call	[printf]
+	add	esp, 4
 
-	invoke	GetModuleHandle,0
-	mov	[wc.hInstance],rax
-	invoke	LoadIcon,0,IDI_APPLICATION
-	mov	[wc.hIcon],rax
-	mov	[wc.hIconSm],rax
-	invoke	LoadCursor,0,IDC_ARROW
-	mov	[wc.hCursor],rax
-	invoke	RegisterClassEx,wc
-	test	rax,rax
-	jz	error
+	push	num1
+	push	_format_input
+	call	[scanf]
+	add	esp, 8
 
-	invoke	CreateWindowEx,0,_class,_title,WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU,128,128,512,256,NULL,NULL,[wc.hInstance],NULL
-	test	rax,rax
-	jz	error
+	push	_prompt2
+	call	[printf]
+	add	esp, 4
 
-  msg_loop:
-	invoke	GetMessage,msg,NULL,0,0
-	cmp	eax,1
-	jb	end_loop
-	jne	msg_loop
-	invoke	TranslateMessage,msg
-	invoke	DispatchMessage,msg
-	jmp	msg_loop
+	push	num2
+	push	_format_input
+	call	[scanf]
+	add	esp, 8
 
-  error:
-	invoke	MessageBox,NULL,_error,NULL,MB_ICONERROR+MB_OK
+	mov	eax, [num1]
+	add	eax, [num2]
+	shr	eax, 1
 
-  end_loop:
-	invoke	ExitProcess,[msg.wParam]
+	push	eax
+	push	_format_output
+	call	[printf]
+	add	esp, 8
 
-proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
+	push	num1
+	push	_format_input
+	call	[scanf]
+	add	esp, 8
 
-; Note that first four parameters are passed in registers,
-; while names given in the declaration of procedure refer to the stack
-; space reserved for them - you may store them there to be later accessible
-; if the contents of registers gets destroyed. This may look like:
-;       mov     [hwnd],rcx
-;       mov     [wmsg],edx
-;       mov     [wparam],r8
-;       mov     [lparam],r9
-
-	cmp	edx,WM_DESTROY
-	je	.wmdestroy
-  .defwndproc:
-	invoke	DefWindowProc,rcx,rdx,r8,r9
-	jmp	.finish
-  .wmdestroy:
-	invoke	PostQuitMessage,0
-	xor	eax,eax
-  .finish:
+	push	0
+	call	[exit]
 	ret
-
-endp
 
 section '.data' data readable writeable
 
-  _title TCHAR 'Calculadora en PostFijo',0
-  _class TCHAR 'FASMWIN64',0
-  _error TCHAR 'Startup failed.',0
+_hello		db "numero 1:",0
+_prompt2	db "numero 2:",0
+_format_input	db "%d",0
+_format_output	db "Resultado= %d",10,0
 
-  wc WNDCLASSEX sizeof.WNDCLASSEX,0,WindowProc,0,0,NULL,NULL,NULL,COLOR_BTNFACE+1,NULL,_class,NULL
+num1		dd ?
+num2		dd ?
 
-  msg MSG
+section '.idata' data import readable
 
-section '.idata' import data readable writeable
+include "macro\import32.inc"
 
-  library kernel32,'KERNEL32.DLL',\
-	  user32,'USER32.DLL'
+library msvcrt, "MSVCRT.DLL"
 
-  include 'api\kernel32.inc'
-  include 'api\user32.inc'
+import msvcrt,\
+       printf ,'printf',\
+       scanf  ,'scanf',\
+       exit   ,'exit'
+
