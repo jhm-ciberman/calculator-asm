@@ -4,13 +4,42 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Run Exe",
+			"label": "Build And Run Graphical",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Build FASM Graphical",
+				"Run EXE"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build And Run Logic",
+			"type": "shell",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Build FASM Logic",
+				"Run EXE"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Run EXE",
 			"type": "shell",
 			"command": "${workspaceFolder}/calc.exe",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
-				"focus": true
+				"focus": true,
+				"clear": false
 			},
 			"problemMatcher": []
 		},
@@ -21,13 +50,33 @@
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
-				"focus": true
+				"focus": true,
+				"clear": true
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": []
+			"problemMatcher": {
+				"fileLocation": "absolute",
+				"source": "FASM",
+				"severity": "error",
+				"pattern":[
+					{
+						"regexp": "^(.*) \\[([0-9]+)\\]: ?$",
+						"line": 2,
+						"file": 1,
+						"kind": "location"
+					},
+					{
+						"regexp": "^.*$",
+					},
+					{
+						"regexp": "^processed: (.*)$",
+						"code": 1,
+					},
+					{
+						"regexp": "^error: (.*)$",
+						"message": 1,
+					}
+				]
+			}
 		},
 		{
 			"label": "Build FASM Logic",
@@ -38,11 +87,30 @@
 				"reveal": "always",
 				"focus": true
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": []
+			"problemMatcher": {
+				"fileLocation": "absolute",
+				"source": "FASM",
+				"severity": "error",
+				"pattern":[
+					{
+						"regexp": "^(.*) \\[([0-9]+)\\]: ?$",
+						"line": 2,
+						"file": 1,
+						"kind": "location"
+					},
+					{
+						"regexp": "^.*$",
+					},
+					{
+						"regexp": "^processed: (.*)$",
+						"code": 1,
+					},
+					{
+						"regexp": "^error: (.*)$",
+						"message": 1,
+					}
+				]
+			}
 		}
 	]
 }

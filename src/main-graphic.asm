@@ -6,21 +6,42 @@ include 'win64a.inc'
 
 section '.text' code readable executable
 
+
   start:
 	sub	rsp,8		; Make stack dqword aligned
 
-	invoke	GetModuleHandle,0
-	mov	[wc.hInstance],rax
+    mov	[wc.cbSize],sizeof.WNDCLASSEX               ; The struct size
+    mov	[wc.style],0                                ; Window Classs style
+    mov	[wc.lpfnWndProc],WindowProc                 ; procedure to be called by windows to handle events
+    mov	[wc.cbClsExtra],0                           ; The number of extra bytes to allocate following the window-class structure
+    mov	[wc.cbWndExtra],0                           ; The number of extra bytes to allocate following the window instance
+    mov	[wc.hInstance],NULL                         ; The hInstance windows instance handler (rcx is the 1st parameter)
+    mov	[wc.hIcon],NULL                             ; The default icon
+    mov	[wc.hCursor],NULL                           ; The default cursor
+    mov	[wc.hbrBackground],COLOR_BTNFACE+1          ; Window class background
+    mov	dword [wc.lpszMenuName],NULL                ; Window class menu name
+    mov	dword [wc.lpszClassName],_gr_str_class      ; Window class name
+	mov	[wc.hIconSm],NULL                           ; The default icon small
+
+    invoke	GetModuleHandle,0
+	mov	[wc.hInstance],rax                   ; The hInstance windows instance handler (rcx is the 1st parameter)
+
+
+    ; Load the default icon (hIcon and hIconSm)
 	invoke	LoadIcon,0,IDI_APPLICATION
 	mov	[wc.hIcon],rax
 	mov	[wc.hIconSm],rax
+
+    ; Load the default arrow cursor (hCursor)
 	invoke	LoadCursor,0,IDC_ARROW
 	mov	[wc.hCursor],rax
+
+	; Register the window class
 	invoke	RegisterClassEx,wc
 	test	rax,rax
 	jz	error
 
-	invoke	CreateWindowEx,0,_class,_title,WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU,128,128,512,256,NULL,NULL,[wc.hInstance],NULL
+	invoke	CreateWindowEx,0,_gr_str_class,_gr_str_title,WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU,128,128,512,256,NULL,NULL,[wc.hInstance],NULL
 	test	rax,rax
 	jz	error
 
@@ -34,7 +55,7 @@ section '.text' code readable executable
 	jmp	msg_loop
 
   error:
-	invoke	MessageBox,NULL,_error,NULL,MB_ICONERROR+MB_OK
+	invoke	MessageBox,NULL,_gr_str_error,NULL,MB_ICONERROR+MB_OK
 
   end_loop:
 	invoke	ExitProcess,[msg.wParam]
@@ -65,11 +86,11 @@ endp
 
 section '.data' data readable writeable
 
-  _title TCHAR 'Calculadora en PostFijo',0
-  _class TCHAR 'FASMWIN64',0
-  _error TCHAR 'Startup failed.',0
+  _gr_str_title TCHAR 'Calculadora en PostFijo',0
+  _gr_str_class TCHAR 'CALCWIN64',0
+  _gr_str_error TCHAR 'Startup failed.',0
 
-  wc WNDCLASSEX sizeof.WNDCLASSEX,0,WindowProc,0,0,NULL,NULL,NULL,COLOR_BTNFACE+1,NULL,_class,NULL
+  wc WNDCLASSEX sizeof.WNDCLASSEX,0,WindowProc,0,0,NULL,NULL,NULL,COLOR_BTNFACE+1,NULL,_gr_str_class,NULL
 
   msg MSG
 
