@@ -15,7 +15,7 @@
 ; NOT realiza el not al tope de la pila
 ; NEG niega el tope de la pila
 
-format PE64 console
+format PE64
 entry main
 
 section '.text' code readable executable
@@ -25,17 +25,17 @@ include 'win64a.inc'
 include "logic/NewString.asm"
 
 main:
-	sub	rsp,8		; Make stack dqword aligned
-
 ;	call ExitProcess
 ;	call [ExitProcess]
-	invoke exit
+    invoke printf, _str
+	invoke exit, 0
 
 	ret
 
 section '.data' data readable writeable
 
-	
+_foo db 10
+_str db "Hola", 10
 
 section '.idata' data import readable
 
