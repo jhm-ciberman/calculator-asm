@@ -1,10 +1,10 @@
 ;;;
 ; Creates the main window.
-; it saves the window handle in _gr_whandle, and the window device context in _gr_dc
+; it saves the window handle in _gr_whandle
 ;
-; returns: 1 if ok, 0 if fails
+; returns: The window handle or 0 if fails
 ;;;
-proc CreateWindow
+proc CalcWindowCreate
 
     mov	[_gr_wc.cbSize],sizeof.WNDCLASSEX               ; The struct size
     mov	[_gr_wc.style],0                                ; Window Classs style
@@ -46,30 +46,13 @@ proc CreateWindow
         CW_USEDEFAULT,CW_USEDEFAULT, \           ; Size (w, h)
         NULL, \                                  ; Parent window    
         NULL, \                                  ; Menu
-        [_gr_wc.hInstance], \                        ; Instance handle
+        [_gr_wc.hInstance], \                    ; Instance handle
         NULL                                     ; Additional application data
 
 	test	rax,rax
 	jz	.error
 
-	mov [_gr_whandle], rax                       ; save the whandle
-
-    ; Gets the device context fot that window
-	invoke GetDC,[_gr_whandle]
-	mov [_gr_dc],rax
-
-	mov [_gr_bmi.biSize],sizeof.BITMAPINFOHEADER
-	mov [_gr_bmi.biWidth],XRES
-	mov [_gr_bmi.biHeight],-YRES
-	mov [_gr_bmi.biPlanes],1
-	mov [_gr_bmi.biBitCount],32
-	mov [_gr_bmi.biCompression],BI_RGB
-	;invoke ShowWindow,[hwnd],SW_NORMAL
-	;invoke UpdateWindow,[hwnd]
-
-    ; return 1 if all ok
-    xor rax, rax
-    inc rax
+    ; return the window context if all ok
     ret
 
     .error:
