@@ -1,10 +1,9 @@
 ;;;
 ; Creates the main window.
-; it saves the window handle in _gr_whandle
 ;
 ; returns: The window handle or 0 if fails
 ;;;
-proc CalcWindowCreate
+proc WindowCreate
 
     mov	[_gr_wc.cbSize],sizeof.WNDCLASSEX               ; The struct size
     mov	[_gr_wc.style],0                                ; Window Classs style
@@ -42,8 +41,10 @@ proc CalcWindowCreate
         _gr_str_class, \                         ; Window class name
         _gr_str_title, \                         ; Window title
         WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU, \     ; Window style
-        CW_USEDEFAULT,CW_USEDEFAULT, \           ; Position (x, y)
-        CW_USEDEFAULT,CW_USEDEFAULT, \           ; Size (w, h)
+        CW_USEDEFAULT, \                         ; Position x
+        CW_USEDEFAULT, \                         ; Position y
+        APP_WIDTH, \                             ; Size width
+        APP_HEIGHT, \                            ; Size height
         NULL, \                                  ; Parent window    
         NULL, \                                  ; Menu
         [_gr_wc.hInstance], \                    ; Instance handle
