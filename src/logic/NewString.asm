@@ -1,4 +1,4 @@
-proc NewString _str ; _str saved in RCX
+;proc NewString _str ; _str saved in RCX
 
 
 
@@ -14,6 +14,6 @@ proc NewString _str ; _str saved in RCX
 
 
 
-    ret
+;    ret
 
-endp 
+;endp 
