@@ -6,98 +6,73 @@ include 'win64a.inc'
 
 section '.text' code readable executable
 
+; Frame real buffer
+WIN_WIDTH  equ 640
+WIN_HEIGHT equ 480
 
-  start:
+; Application virtual buffer
+APP_PIXEL_SCALEX equ 4
+APP_PIXEL_SCALEY equ 4
+APP_WIDTH  equ WIN_WIDTH/APP_PIXEL_SCALEX
+APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
+
+
+include 'graphic/AppInit.asm'
+include 'graphic/AppUpdate.asm'
+include 'graphic/ThreadProcessMessages.asm'
+
+include 'graphic/window/WindowSurfaceFlush.asm'
+include 'graphic/window/WindowCreate.asm'
+include 'graphic/window/WindowDcInit.asm'
+include 'graphic/window/WindowProc.asm'
+
+include 'graphic/draw/DrawBuffer.asm'
+include 'graphic/draw/DrawBufferScaled.asm'
+include 'graphic/draw/DrawChar.asm'
+include 'graphic/draw/DrawClear.asm'
+include 'graphic/draw/DrawSetTarget.asm'
+include 'graphic/draw/DrawPixel.asm'
+include 'graphic/draw/DrawLineHorizontal.asm'
+include 'graphic/draw/DrawRectangle.asm'
+
+start:
 	sub	rsp,8		; Make stack dqword aligned
-
-    mov	[wc.cbSize],sizeof.WNDCLASSEX               ; The struct size
-    mov	[wc.style],0                                ; Window Classs style
-    mov	[wc.lpfnWndProc],WindowProc                 ; procedure to be called by windows to handle events
-    mov	[wc.cbClsExtra],0                           ; The number of extra bytes to allocate following the window-class structure
-    mov	[wc.cbWndExtra],0                           ; The number of extra bytes to allocate following the window instance
-    mov	[wc.hInstance],NULL                         ; The hInstance windows instance handler (rcx is the 1st parameter)
-    mov	[wc.hIcon],NULL                             ; The default icon
-    mov	[wc.hCursor],NULL                           ; The default cursor
-    mov	[wc.hbrBackground],COLOR_BTNFACE+1          ; Window class background
-    mov	dword [wc.lpszMenuName],NULL                ; Window class menu name
-    mov	dword [wc.lpszClassName],_gr_str_class      ; Window class name
-	mov	[wc.hIconSm],NULL                           ; The default icon small
-
-    invoke	GetModuleHandle,0
-	mov	[wc.hInstance],rax                   ; The hInstance windows instance handler (rcx is the 1st parameter)
-
-
-    ; Load the default icon (hIcon and hIconSm)
-	invoke	LoadIcon,0,IDI_APPLICATION
-	mov	[wc.hIcon],rax
-	mov	[wc.hIconSm],rax
-
-    ; Load the default arrow cursor (hCursor)
-	invoke	LoadCursor,0,IDC_ARROW
-	mov	[wc.hCursor],rax
-
-	; Register the window class
-	invoke	RegisterClassEx,wc
-	test	rax,rax
-	jz	error
-
-	invoke	CreateWindowEx,0,_gr_str_class,_gr_str_title,WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU,128,128,512,256,NULL,NULL,[wc.hInstance],NULL
-	test	rax,rax
-	jz	error
-
-  msg_loop:
-	invoke	GetMessage,msg,NULL,0,0
-	cmp	eax,1
-	jb	end_loop
-	jne	msg_loop
-	invoke	TranslateMessage,msg
-	invoke	DispatchMessage,msg
-	jmp	msg_loop
-
-  error:
-	invoke	MessageBox,NULL,_gr_str_error,NULL,MB_ICONERROR+MB_OK
-
-  end_loop:
-	invoke	ExitProcess,[msg.wParam]
-
-proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
-
-; Note that first four parameters are passed in registers,
-; while names given in the declaration of procedure refer to the stack
-; space reserved for them - you may store them there to be later accessible
-; if the contents of registers gets destroyed. This may look like:
-;       mov     [hwnd],rcx
-;       mov     [wmsg],edx
-;       mov     [wparam],r8
-;       mov     [lparam],r9
-
-	cmp	edx,WM_DESTROY
-	je	.wmdestroy
-  .defwndproc:
-	invoke	DefWindowProc,rcx,rdx,r8,r9
-	jmp	.finish
-  .wmdestroy:
-	invoke	PostQuitMessage,0
-	xor	eax,eax
-  .finish:
-	ret
-
-endp
+	fastcall AppInit
 
 section '.data' data readable writeable
 
-  _gr_str_title TCHAR 'Calculadora en PostFijo',0
-  _gr_str_class TCHAR 'CALCWIN64',0
-  _gr_str_error TCHAR 'Startup failed.',0
+	; strings
+	_gr_str_title      TCHAR 'Calculadora en PostFijo',0
+	_gr_str_error      TCHAR 'Startup failed.',0
 
-  wc WNDCLASSEX sizeof.WNDCLASSEX,0,WindowProc,0,0,NULL,NULL,NULL,COLOR_BTNFACE+1,NULL,_gr_str_class,NULL
+	; Window
+	_gr_str_class      TCHAR 'CALCWIN64',0              ; class name
+	_gr_wc             WNDCLASSEX                       ; class
+	_gr_whandle        dq 0                             ; handle
+	_gr_dc             dq 0                             ; device context
+	_gr_bmi            BITMAPINFOHEADER                 ; bitmap info header
+	_gr_msg            MSG                              ; the message to process in the message queue
+	_gr_mouse_x        dq 0                             ; the x mouse coordinate (relative to the upper left corner of the window)
+	_gr_mouse_y        dq 0                             ; the y mouse coordinate (relative to the upper left corner of the window)
 
-  msg MSG
+	align 16
+	_gr_winbuffer    rd WIN_WIDTH*WIN_HEIGHT            ; The main window real framebuffer (real window size)
+	_gr_appbuffer    rd APP_WIDTH*APP_HEIGHT            ; The application virtual framebuffer (smaller)
+
+	; The active drawing target surface 
+	_gr_draw_target_buff    dq 0                        ; colour buffer (pointer)
+	_gr_draw_target_width   dq 0                        ; width
+	_gr_draw_target_height  dq 0                        ; height
+
+	include 'graphic/font.asm'
 
 section '.idata' import data readable writeable
 
-  library kernel32,'KERNEL32.DLL',\
-	  user32,'USER32.DLL'
+	library kernel32,'KERNEL32.DLL',\
+		user32,'USER32.DLL', \
+		gdi,'GDI32.DLL'
 
-  include 'api\kernel32.inc'
-  include 'api\user32.inc'
+	include 'api\kernel32.inc'
+	include 'api\user32.inc'
+	import gdi,\
+		SetDIBitsToDevice,'SetDIBitsToDevice'
