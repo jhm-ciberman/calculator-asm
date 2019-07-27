@@ -29,34 +29,31 @@ section '.text' code readable executable
 include 'win64a.inc'
 include 'logic/NewString.asm'
 include 'logic/PrintBinary.asm'
+include 'logic/PrintString.asm'
 
 main:
     sub	rsp, 8		; Make stack dqword aligned
 
 ;AGREGAR LEER NUMEROS SEPARADOS POR ESPACIOS
 
-    push _numIn
-    invoke printf
-    add esp, 4
+    fastcall PrintString, _numIn
 
     push _lg_str
     push _format_input
     invoke scanf
     add esp, 8
 
-    push _lg_str_ok
-    invoke printf
-    add esp, 4
+    fastcall PrintString, _lg_str_ok
+    fastcall PrintString, _lg_line_bk
 
     fastcall PrintBinary, _lg_str
-    push _lg_line_bk
-    invoke printf
-    add esp, 4
+    fastcall PrintString, _lg_str_ok
 
     push _lg_str
     push _format_input
     invoke scanf
     add esp, 8
+
 	invoke exit
 	ret
 
@@ -68,7 +65,7 @@ _format_output  TCHAR "El numero es ",0      ; TEST
 _format_input dq "%d",0                      ; TEST
 
 ; Strings
-_lg_str dq ?                               ; receives any string from main-graphic
+_lg_str dq ?                                 ; receives any string from main-graphic
 _lg_str_ok  dq "Ok",10,0                     ; 'Ok' string
 _lg_line_bk dq 10,0                          ;  line break 
 _lg_s0  dq "0",0                             ; '0' string
