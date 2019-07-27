@@ -26,7 +26,9 @@ include 'graphic/window/WindowCreate.asm'
 include 'graphic/window/WindowDcInit.asm'
 include 'graphic/window/WindowProc.asm'
 
+include 'graphic/draw/DrawBuffer.asm'
 include 'graphic/draw/DrawBufferScaled.asm'
+include 'graphic/draw/DrawChar.asm'
 include 'graphic/draw/DrawClear.asm'
 include 'graphic/draw/DrawSetTarget.asm'
 include 'graphic/draw/DrawPixel.asm'
@@ -61,6 +63,8 @@ section '.data' data readable writeable
 	_gr_draw_target_buff    dq 0                        ; colour buffer (pointer)
 	_gr_draw_target_width   dq 0                        ; width
 	_gr_draw_target_height  dq 0                        ; height
+
+	include 'graphic/font.asm'
 
 section '.idata' import data readable writeable
 
