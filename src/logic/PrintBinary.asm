@@ -7,12 +7,14 @@
 proc PrintBinary uses rax rdx rcx, _str:QWORD ; _str saved in rcx
 
 mov rax, -64        ; counter
-mov rbx, $80000000  ; bitmask
+mov rbx, 1  ; bitmask
+shl rbx, 63
 xor rdx, rdx
 
 .mainloop:
     test rcx, rbx ; Compares MSB with 1 
     jz .zero
+
     shl rcx, 1
     mov rdx, _lg_s1     ; Prints '1'
     jmp .eval

@@ -37,16 +37,13 @@ main:
 ;AGREGAR LEER NUMEROS SEPARADOS POR ESPACIOS
 
     fastcall PrintString, _numIn
-
-    push _lg_str
-    push _format_input
-    invoke scanf
-    add esp, 8
+ 
+    invoke scanf, _format_input, _lg_str
 
     fastcall PrintString, _lg_str_ok
     fastcall PrintString, _lg_line_bk
 
-    fastcall PrintBinary, _lg_str
+    fastcall PrintBinary, -2
     fastcall PrintString, _lg_str_ok
 
     push _lg_str
