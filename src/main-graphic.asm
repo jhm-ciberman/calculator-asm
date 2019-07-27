@@ -20,6 +20,7 @@ include 'graphic/window/WindowProc.asm'
 include 'graphic/draw/DrawClear.asm'
 include 'graphic/draw/DrawSetTarget.asm'
 include 'graphic/draw/DrawPixel.asm'
+include 'graphic/draw/DrawLineHorizontal.asm'
 
 start:
 	sub	rsp,8		; Make stack dqword aligned
@@ -42,7 +43,8 @@ start:
 	fastcall ThreadProcessMessages
 	fastcall AppUpdate
 	
-	fastcall DrawPixel, [_gr_mouse_x], [_gr_mouse_y], $ffcfed09
+	; fastcall DrawPixel, [_gr_mouse_x], [_gr_mouse_y], $ffcfed09
+	fastcall DrawLineHorizontal, [_gr_mouse_x], [_gr_mouse_y], 100, $ffedcf09
 
 	fastcall WindowSurfaceFlush
     jmp .mainloop
