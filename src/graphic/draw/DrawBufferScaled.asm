@@ -35,12 +35,13 @@ proc DrawBufferScaled, buffer:QWORD, bufferwidth:DWORD, bufferheight:DWORD, x:DW
     cmp eax, [bufferwidth] 
     jnl .endfor_j
 
+    mov rax, [buffer]
+    fastcall DrawRectangle, [x], [y], [scalex], [scaley], QWORD [rax]
+
     ; buffer += 4;
     mov rax, [buffer]
     add rax, 4
     mov [buffer], rax
-
-    fastcall DrawRectangle, [x], [y], [scalex], [scaley], QWORD [rax]
 
     mov eax, [scalex]
     add [x], eax
