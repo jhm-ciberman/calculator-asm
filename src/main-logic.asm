@@ -14,35 +14,71 @@
 ; XOR realiza el or exclusivo
 ; NOT realiza el not al tope de la pila
 ; NEG niega el tope de la pila
+;
+; .  imprime en consola el tope de la pila en decimal consumiendolo
+; .h imprime en consola el tope pero en hexadecimal
+; .b imprime el tope en binarios
+; . imprime la pila completa en la consola primero el tope de la pila y ultimo el primer valor
+; .exit Cierra el programa
 
-format PE64
+format PE64 console
 entry main
 
 section '.text' code readable executable
 
-
 include 'win64a.inc'
-include "logic/NewString.asm"
+include 'logic/NewString.asm'
+include 'logic/PrintBinary.asm'
 
 main:
-;	call ExitProcess
-;	call [ExitProcess]
-    invoke printf, _str
-	invoke exit, 0
+    sub	rsp, 8		; Make stack dqword aligned
 
+;AGREGAR LEER NUMEROS SEPARADOS POR ESPACIOS
+
+    push _numIn
+    invoke printf
+    add esp, 4
+
+    push _lg_str
+    push _format_input
+    invoke scanf
+    add esp, 8
+
+    push _lg_str_ok
+    invoke printf
+    add esp, 4
+
+    fastcall PrintBinary, _lg_str
+    push _lg_line_bk
+    invoke printf
+    add esp, 4
+
+    push _lg_str
+    push _format_input
+    invoke scanf
+    add esp, 8
+	invoke exit
 	ret
 
 section '.data' data readable writeable
 
-_foo db 10
-_str db "Hola", 10
+; Test
+_numIn dq "Numero: ",0                       ; TEST
+_format_output  TCHAR "El numero es ",0      ; TEST
+_format_input dq "%d",0                      ; TEST
+
+; Strings
+_lg_str dq ?                               ; receives any string from main-graphic
+_lg_str_ok  dq "Ok",10,0                     ; 'Ok' string
+_lg_line_bk dq 10,0                          ;  line break 
+_lg_s0  dq "0",0                             ; '0' string
+_lg_s1  dq "1",0                             ; '1' string
 
 section '.idata' data import readable
 
-library msvcrt, "MSVCRT.DLL"
+    library msvcrt, "MSVCRT.DLL"
 
-import msvcrt,\
-       printf ,'printf',\
-       scanf  ,'scanf',\
-       exit   ,'exit'
-
+    import msvcrt,\
+        printf ,'printf',\
+        scanf  ,'scanf',\
+        exit   ,'exit'
