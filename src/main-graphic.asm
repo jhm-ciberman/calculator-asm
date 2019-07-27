@@ -18,6 +18,7 @@ include 'graphic/window/WindowDcInit.asm'
 include 'graphic/window/WindowProc.asm'
 
 include 'graphic/draw/DrawClear.asm'
+include 'graphic/draw/DrawSetTarget.asm'
 include 'graphic/draw/DrawPixel.asm'
 
 start:
@@ -31,6 +32,8 @@ start:
 	fastcall WindowDcInit
 	invoke ShowWindow,[_gr_whandle],SW_NORMAL
 	invoke UpdateWindow,[_gr_whandle]
+
+	fastcall DrawSetTarget, APP_WIDTH, APP_HEIGHT, _gr_framebuffer
 
 	; Thread Main loop
 	fastcall DrawClear, $ff6d78a6
@@ -56,19 +59,23 @@ section '.data' data readable writeable
 	_gr_str_error      TCHAR 'Startup failed.',0
 
 	; Window
-	_gr_str_class      TCHAR 'CALCWIN64',0              ; the windows class name
-	_gr_wc             WNDCLASSEX                       ; the window class
-	_gr_whandle        dq 0                             ; the window handle
-	_gr_dc             dq 0                             ; the window device context
-	_gr_bmi            BITMAPINFOHEADER                 ; the window bitmap info header
+	_gr_str_class      TCHAR 'CALCWIN64',0              ; class name
+	_gr_wc             WNDCLASSEX                       ; class
+	_gr_whandle        dq 0                             ; handle
+	_gr_dc             dq 0                             ; device context
+	_gr_bmi            BITMAPINFOHEADER                 ; bitmap info header
 	_gr_msg            MSG                              ; the message to process in the message queue
-
 	_gr_mouse_x        dq 0                             ; the x mouse coordinate (relative to the upper left corner of the window)
 	_gr_mouse_y        dq 0                             ; the y mouse coordinate (relative to the upper left corner of the window)
 
 	align 16
 	
 	_gr_framebuffer    rd APP_WIDTH*APP_HEIGHT          ; The main application Framebuffer
+
+	; The drawing target surface 
+	_gr_draw_target_buff    dq 0                        ; colour buffer (pointer)
+	_gr_draw_target_width   dq 0                        ; width
+	_gr_draw_target_height  dq 0                        ; height
 
 section '.idata' import data readable writeable
 

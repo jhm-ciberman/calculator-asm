@@ -8,12 +8,12 @@
 ;;;
 proc DrawPixel uses rbx, x, y, colour
     ; if (x >= dest_w) return;
-    mov rax, APP_WIDTH
+    mov rax, [_gr_draw_target_width]
     cmp rcx, rax
     jge .return
 
     ; if (y >= dest_y) return;
-    mov rbx, APP_HEIGHT
+    mov rbx, [_gr_draw_target_height]
     cmp rdx, rbx
     jge .return
     
@@ -26,7 +26,8 @@ proc DrawPixel uses rbx, x, y, colour
     mul rdx
     add rax, rcx
 
-    mov [_gr_framebuffer+rax*4],r8d    ; puts col in SOURCE_BUFFER[eax] 
+    mov rbx, [_gr_draw_target_buff]
+    mov dword[rbx+rax*4],r8d    ; puts col in SOURCE_BUFFER[eax] 
     .return:
     ret
 endp
