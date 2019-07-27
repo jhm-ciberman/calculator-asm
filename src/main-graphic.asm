@@ -10,12 +10,15 @@ APP_WIDTH  equ 640
 APP_HEIGHT equ 480
 
 include 'graphic/AppUpdate.asm'
-include 'graphic/AppRedraw.asm'
-include 'graphic/AppSurfaceClear.asm'
 include 'graphic/ThreadProcessMessages.asm'
-include 'graphic/WindowCreate.asm'
-include 'graphic/WindowDcInit.asm'
-include 'graphic/WindowProc.asm'
+
+include 'graphic/window/WindowSurfaceFlush.asm'
+include 'graphic/window/WindowCreate.asm'
+include 'graphic/window/WindowDcInit.asm'
+include 'graphic/window/WindowProc.asm'
+
+include 'graphic/draw/DrawClear.asm'
+include 'graphic/draw/DrawPixel.asm'
 
 start:
 	sub	rsp,8		; Make stack dqword aligned
@@ -30,11 +33,15 @@ start:
 	invoke UpdateWindow,[_gr_whandle]
 
 	; Thread Main loop
+	fastcall DrawClear, $ff6d78a6
+
 	.mainloop:
 	fastcall ThreadProcessMessages
 	fastcall AppUpdate
-	fastcall AppSurfaceClear, $6d78a6
-	fastcall AppRedraw
+	
+	fastcall DrawPixel, [_gr_mouse_x], [_gr_mouse_y], $ffcfed09
+
+	fastcall WindowSurfaceFlush
     jmp .mainloop
 
   	.error:
@@ -55,11 +62,13 @@ section '.data' data readable writeable
 	_gr_dc             dq 0                             ; the window device context
 	_gr_bmi            BITMAPINFOHEADER                 ; the window bitmap info header
 	_gr_msg            MSG                              ; the message to process in the message queue
-	
+
+	_gr_mouse_x        dq 0                             ; the x mouse coordinate (relative to the upper left corner of the window)
+	_gr_mouse_y        dq 0                             ; the y mouse coordinate (relative to the upper left corner of the window)
+
 	align 16
 	
 	_gr_framebuffer    rd APP_WIDTH*APP_HEIGHT          ; The main application Framebuffer
-
 
 section '.idata' import data readable writeable
 

@@ -1,4 +1,4 @@
-proc AppRedraw
+proc WindowSurfaceFlush
 
     invoke SetDIBitsToDevice, \
 		[_gr_dc], \               ; Device context 
