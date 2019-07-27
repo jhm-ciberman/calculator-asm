@@ -3,7 +3,10 @@
 ;
 ; returns: The window handle or 0 if fails
 ;;;
-proc WindowCreate
+proc WindowCreate, width, height, title
+    mov [width], rcx
+    mov [height], rdx
+    mov [title], r8
 
     mov	[_gr_wc.cbSize],sizeof.WNDCLASSEX               ; The struct size
     mov	[_gr_wc.style],0                                ; Window Classs style
@@ -39,12 +42,12 @@ proc WindowCreate
 	invoke	CreateWindowEx, \
         0, \                                     ; Optional window styles
         _gr_str_class, \                         ; Window class name
-        _gr_str_title, \                         ; Window title
+        [title], \                               ; Window title
         WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU, \     ; Window style
         CW_USEDEFAULT, \                         ; Position x
         CW_USEDEFAULT, \                         ; Position y
-        APP_WIDTH, \                             ; Size width
-        APP_HEIGHT, \                            ; Size height
+        [width], \                               ; Size width
+        [height], \                              ; Size height
         NULL, \                                  ; Parent window    
         NULL, \                                  ; Menu
         [_gr_wc.hInstance], \                    ; Instance handle

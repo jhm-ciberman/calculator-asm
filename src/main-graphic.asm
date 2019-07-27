@@ -6,8 +6,16 @@ include 'win64a.inc'
 
 section '.text' code readable executable
 
-APP_WIDTH  equ 640
-APP_HEIGHT equ 480
+; Frame real buffer
+WIN_WIDTH  equ 640
+WIN_HEIGHT equ 480
+; Application virtual buffer
+APP_PIXEL_SCALEX equ 4
+APP_PIXEL_SCALEY equ 4
+APP_WIDTH  equ WIN_WIDTH/APP_PIXEL_SCALEX
+APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
+
+
 
 include 'graphic/AppUpdate.asm'
 include 'graphic/ThreadProcessMessages.asm'
@@ -17,35 +25,46 @@ include 'graphic/window/WindowCreate.asm'
 include 'graphic/window/WindowDcInit.asm'
 include 'graphic/window/WindowProc.asm'
 
+include 'graphic/draw/DrawBufferScaled.asm'
 include 'graphic/draw/DrawClear.asm'
 include 'graphic/draw/DrawSetTarget.asm'
 include 'graphic/draw/DrawPixel.asm'
 include 'graphic/draw/DrawLineHorizontal.asm'
+include 'graphic/draw/DrawRectangle.asm'
 
 start:
 	sub	rsp,8		; Make stack dqword aligned
-	fastcall WindowCreate
+	fastcall WindowCreate, WIN_WIDTH, WIN_HEIGHT, _gr_str_title
 
 	test rax, rax
 	jz .error
 	mov [_gr_whandle], rax  ; save the whandle
 
-	fastcall WindowDcInit
+	fastcall WindowDcInit, WIN_WIDTH, WIN_HEIGHT
 	invoke ShowWindow,[_gr_whandle],SW_NORMAL
 	invoke UpdateWindow,[_gr_whandle]
 
-	fastcall DrawSetTarget, APP_WIDTH, APP_HEIGHT, _gr_framebuffer
+	fastcall DrawSetTarget, WIN_WIDTH, WIN_HEIGHT, _gr_winbuffer
+	fastcall DrawClear, $ff282d26
 
 	; Thread Main loop
-	fastcall DrawClear, $ff6d78a6
-
 	.mainloop:
 	fastcall ThreadProcessMessages
 	fastcall AppUpdate
-	
-	; fastcall DrawPixel, [_gr_mouse_x], [_gr_mouse_y], $ffcfed09
-	fastcall DrawLineHorizontal, [_gr_mouse_x], [_gr_mouse_y], 100, $ffedcf09
+	fastcall DrawSetTarget, APP_WIDTH, APP_HEIGHT, _gr_appbuffer
+	fastcall DrawClear, $ff6d78a6
 
+	; fastcall DrawPixel, [_gr_mouse_x], [_gr_mouse_y], $ffcfed09
+	mov rax, [_gr_mouse_x]
+	shr rax, 2
+
+	mov rbx, [_gr_mouse_y]
+	shr rbx, 2
+
+	fastcall DrawRectangle, rax, rbx, 100, 20, $ffedcf09
+
+	fastcall DrawSetTarget, WIN_WIDTH, WIN_HEIGHT, _gr_winbuffer
+	fastcall DrawBufferScaled, _gr_appbuffer, APP_WIDTH, APP_HEIGHT, 0, 0, APP_PIXEL_SCALEX, APP_PIXEL_SCALEY
 	fastcall WindowSurfaceFlush
     jmp .mainloop
 
@@ -72,8 +91,8 @@ section '.data' data readable writeable
 
 	align 16
 	
-	_gr_framebuffer    rd APP_WIDTH*APP_HEIGHT          ; The main application Framebuffer
-
+	_gr_winbuffer    rd WIN_WIDTH*WIN_HEIGHT          ; The main application Framebuffer
+	_gr_appbuffer    rd APP_WIDTH*APP_HEIGHT
 	; The drawing target surface 
 	_gr_draw_target_buff    dq 0                        ; colour buffer (pointer)
 	_gr_draw_target_width   dq 0                        ; width
