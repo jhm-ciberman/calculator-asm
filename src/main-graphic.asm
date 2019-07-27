@@ -7,12 +7,12 @@ include 'win64a.inc'
 section '.text' code readable executable
 
 ; Frame real buffer
-WIN_WIDTH  equ 640
-WIN_HEIGHT equ 480
+WIN_WIDTH  equ 800
+WIN_HEIGHT equ 600
 
 ; Application virtual buffer
-APP_PIXEL_SCALEX equ 4
-APP_PIXEL_SCALEY equ 4
+APP_PIXEL_SCALEX equ 2
+APP_PIXEL_SCALEY equ 2
 APP_WIDTH  equ WIN_WIDTH/APP_PIXEL_SCALEX
 APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
 
@@ -28,12 +28,14 @@ include 'graphic/window/WindowProc.asm'
 
 include 'graphic/draw/DrawBuffer.asm'
 include 'graphic/draw/DrawBufferScaled.asm'
-include 'graphic/draw/DrawChar.asm'
 include 'graphic/draw/DrawClear.asm'
 include 'graphic/draw/DrawSetTarget.asm'
 include 'graphic/draw/DrawPixel.asm'
+include 'graphic/draw/DrawPixelChar.asm'
+include 'graphic/draw/DrawPixelText.asm'
 include 'graphic/draw/DrawLineHorizontal.asm'
 include 'graphic/draw/DrawRectangle.asm'
+
 
 start:
 	sub	rsp,8		; Make stack dqword aligned
@@ -44,6 +46,7 @@ section '.data' data readable writeable
 	; strings
 	_gr_str_title      TCHAR 'Calculadora en PostFijo',0
 	_gr_str_error      TCHAR 'Startup failed.',0
+	_gr_str_test       TCHAR 'Testing line breaks',10,'string... with fancy chars: ', 12, 32, 13, 32, 140, 0
 
 	; Window
 	_gr_str_class      TCHAR 'CALCWIN64',0              ; class name
