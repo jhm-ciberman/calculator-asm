@@ -30,6 +30,7 @@ include 'win64a.inc'
 include 'logic/NewString.asm'
 include 'logic/PrintBinary.asm'
 include 'logic/PrintString.asm'
+include 'logic/StringToDecimal.asm'
 
 main:
     sub	rsp, 8		; Make stack dqword aligned
@@ -43,8 +44,9 @@ main:
     fastcall PrintString, _lg_str_ok
     fastcall PrintString, _lg_line_bk
 
-    fastcall PrintBinary, -2
-    fastcall PrintString, _lg_str_ok
+    fastcall StringToDecimal, _lg_str
+    ;fastcall PrintBinary, _lg_int
+    fastcall PrintString, _lg_line_bk
 
     push _lg_str
     push _format_input
@@ -57,16 +59,17 @@ main:
 section '.data' data readable writeable
 
 ; Test
-_numIn dq "Numero: ",0                       ; TEST
-_format_output  TCHAR "El numero es ",0      ; TEST
-_format_input dq "%d",0                      ; TEST
+_numIn dq "Numero: ", 0                       ; TEST
+_format_output  TCHAR "El numero es ", 0      ; TEST
+_format_input dq "%s", 0                      ; TEST
 
 ; Strings
-_lg_str dq ?                                 ; receives any string from main-graphic
-_lg_str_ok  dq "Ok",10,0                     ; 'Ok' string
-_lg_line_bk dq 10,0                          ;  line break 
-_lg_s0  dq "0",0                             ; '0' string
-_lg_s1  dq "1",0                             ; '1' string
+_lg_int dq ?                                  ; Integer
+_lg_str rq 256                               ; Receives any string from main-graphic
+_lg_str_ok  dq "Ok", 10, 0                    ; 'Ok' string
+_lg_line_bk dq 10, 0                          ;  line break 
+_lg_s0  dq "0", 0                             ; '0' string
+_lg_s1  dq "1", 0                             ; '1' string
 
 section '.idata' data import readable
 
