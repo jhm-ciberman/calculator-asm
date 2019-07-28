@@ -9,6 +9,12 @@ proc Main
 	invoke ShowWindow,[_gr_whandle],SW_NORMAL
 	invoke UpdateWindow,[_gr_whandle]
 
+	fastcall BufferCreate, WIN_WIDTH, WIN_HEIGHT
+	mov [_gr_winbuffer], rax
+
+	fastcall BufferCreate, APP_WIDTH, APP_HEIGHT
+	mov [_gr_appbuffer], rax
+
     ; call the app init function
 	fastcall AppInit
 	
@@ -22,14 +28,14 @@ proc Main
     je .exitapp
 
     ; set the draw target to the app buffer
-	fastcall DrawSetTarget, APP_WIDTH, APP_HEIGHT, _gr_appbuffer
+	fastcall DrawSetTarget, APP_WIDTH, APP_HEIGHT, [_gr_appbuffer]
 
     ; call the app update function
 	fastcall AppUpdate
 
     ; copy the app buffer to the win buffer and sends its content to the window
-	fastcall DrawSetTarget, WIN_WIDTH, WIN_HEIGHT, _gr_winbuffer
-	fastcall DrawBufferScaled, _gr_appbuffer, APP_WIDTH, APP_HEIGHT, 0, 0, APP_PIXEL_SCALEX, APP_PIXEL_SCALEY
+	fastcall DrawSetTarget, WIN_WIDTH, WIN_HEIGHT, [_gr_winbuffer]
+	fastcall DrawBufferScaled, [_gr_appbuffer], APP_WIDTH, APP_HEIGHT, 0, 0, APP_PIXEL_SCALEX, APP_PIXEL_SCALEY
 	fastcall WindowSurfaceFlush
     
     jmp .mainloop

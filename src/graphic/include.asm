@@ -16,6 +16,7 @@ include 'input/InputBufferClear.asm'
 include 'input/InputOnKeyDown.asm'
 include 'input/InputSend.asm'
 
+include 'draw/BufferCreate.asm'
 include 'draw/DrawBuffer.asm'
 include 'draw/DrawBufferScaled.asm'
 include 'draw/DrawClear.asm'

@@ -12,7 +12,7 @@ proc WindowSurfaceFlush
 		0,0, \                    ; The (x,y) coordinate of the lower-left corner of the image.
 		0, \                      ; First scan line index
 		WIN_HEIGHT, \             ; Number of scan lines
-		_gr_winbuffer, \          ; The colour data buffer
+		[_gr_winbuffer], \          ; The colour data buffer
 		_gr_bmi, \                ; A pointer to the BITMAPINFO structure
 		0                         ; Colour type
 
