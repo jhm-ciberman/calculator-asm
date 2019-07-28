@@ -1,4 +1,4 @@
-proc DrawChar uses r14, x: DWORD, y:DWORD, char:BYTE, colour: DWORD
+proc DrawPixelChar uses r14, x: DWORD, y:DWORD, char:BYTE, colour: DWORD
     local pbuff:QWORD, i:BYTE, j:BYTE, xstart: DWORD
     mov [x], ecx
     mov [y], edx
@@ -44,7 +44,7 @@ proc DrawChar uses r14, x: DWORD, y:DWORD, char:BYTE, colour: DWORD
     shr r15, cl
     test r15, 1
     jz .skip_1
-    fastcall DrawPixel, [x], [y], $ffff0000
+    fastcall DrawPixel, [x], [y], [colour]
     .skip_1:
 
     inc [x]

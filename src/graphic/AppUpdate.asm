@@ -1,34 +1,39 @@
 proc AppUpdate
-	local i:BYTE, j:BYTE, x: DWORD, y: DWORD
-	fastcall DrawClear, $ff6d78a6
+	local x: DWORD, y: DWORD, len: DWORD
 
-	; fastcall DrawPixel, [_gr_mouse_x], [_gr_mouse_y], $ffcfed09
-	mov rax, [_gr_mouse_x]
-	shr rax, 2
+	; clear background colour
+	fastcall DrawClear, [_gr_col_background]
 
-	mov rbx, [_gr_mouse_y]
-	shr rbx, 2
+	xor eax, eax
+	mov al, [_gr_margin_top]
+	mov [y], eax
+	mov al, [_gr_margin_left]
+	mov [x], eax
 
-	fastcall DrawChar, 50+0, 50-16, 2, $ffff2f29
-	fastcall DrawChar, 50+8+2, 50-16, 3, $ffff2f29
-	fastcall DrawChar, 50+16+4, 50-16, 4, $ffff2f29
-	fastcall DrawChar, 50+24+6, 50-16, 5, $ffff2f29
-	fastcall DrawChar, 50+32+8, 50-16, 6, $ffff2f29
+	; draw the ">> " string at the start of the input line
+	fastcall DrawPixelText, [x], [y], _gr_str_console_start, [_gr_col_primary]
 
-	fastcall DrawChar, 50+0, 50, 49, $ffff2f29
-	fastcall DrawChar, 50+8+2, 50, 50, $ffff2f29
-	fastcall DrawChar, 50+16+4, 50, 51, $ffff2f29
-	fastcall DrawChar, 50+24+6, 50, 52, $ffff2f29
-	fastcall DrawChar, 50+32+8, 50, 53, $ffff2f29
+	add [x], 16
 
-	fastcall DrawChar, 50+0, 50+16, 65, $ffff2f29
-	fastcall DrawChar, 50+8+2, 50+16, 66, $ffff2f29
-	fastcall DrawChar, 50+16+4, 50+16, 67, $ffff2f29
-	fastcall DrawChar, 50+24+6, 50+16, 68, $ffff2f29
-	fastcall DrawChar, 50+32+8, 50+16, 69, $ffff2f29
+	; Draw the user input
+	fastcall DrawPixelText, [x], [y], _gr_input_buffer, [_gr_col_text]
 
-	.endwhile:
+	; if current second is odd, don't draw the cursor
+	invoke GetSystemTime, _gr_system_time
+	mov ax, [_gr_system_time.wSecond]
+	test ax, 1
+	jne .odd_second
 
-	;fastcall DrawRectangle, rax, rbx, 100, 20, $ffedcf09
+	; x := x + strlen(input_buffer) * 8
+	invoke strlen, _gr_input_buffer
+	shl eax, 3
+	add [x], eax
+
+	; Draw the carret
+	fastcall DrawPixelText, [x], [y], _gr_str_console_cursor, [_gr_col_primary]
+
+	.odd_second:
+
+
     ret
 endp
