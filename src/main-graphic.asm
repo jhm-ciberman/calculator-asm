@@ -26,6 +26,12 @@ include 'graphic/window/WindowCreate.asm'
 include 'graphic/window/WindowDcInit.asm'
 include 'graphic/window/WindowProc.asm'
 
+include 'graphic/input/InputBufferAddChar.asm'
+include 'graphic/input/InputBufferRemoveChar.asm'
+include 'graphic/input/InputBufferClear.asm'
+include 'graphic/input/InputOnKeyDown.asm'
+include 'graphic/input/InputSend.asm'
+
 include 'graphic/draw/DrawBuffer.asm'
 include 'graphic/draw/DrawBufferScaled.asm'
 include 'graphic/draw/DrawClear.asm'
@@ -67,15 +73,24 @@ section '.data' data readable writeable
 	_gr_draw_target_width   dq 0                        ; width
 	_gr_draw_target_height  dq 0                        ; height
 
+	; Input
+	_gr_input_buffer       rb 255                       ; Max input = 255
+	_gr_input_char_count   db 0                         ; Current character count
+
+
 	include 'graphic/font.asm'
 
 section '.idata' import data readable writeable
 
 	library kernel32,'KERNEL32.DLL',\
 		user32,'USER32.DLL', \
-		gdi,'GDI32.DLL'
+		gdi,'GDI32.DLL', \
+		msvcrt, "MSVCRT.DLL"
 
 	include 'api\kernel32.inc'
 	include 'api\user32.inc'
 	import gdi,\
 		SetDIBitsToDevice,'SetDIBitsToDevice'
+
+    import msvcrt,\
+        strlen ,'strlen'

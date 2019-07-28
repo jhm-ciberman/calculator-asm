@@ -12,6 +12,8 @@ proc AppInit
 	fastcall DrawSetTarget, WIN_WIDTH, WIN_HEIGHT, _gr_winbuffer
 	fastcall DrawClear, $ff282d26
 
+	fastcall InputBufferClear
+	
 	; Thread Main loop
 	.mainloop:
 	fastcall ThreadProcessMessages

@@ -8,8 +8,15 @@ proc AppUpdate
 
 	mov rbx, [_gr_mouse_y]
 	shr rbx, 2
-
+	;fastcall InputBufferClear
+	;fastcall InputBufferAddChar, 49
+	;fastcall InputBufferAddChar, 50
+	;fastcall InputBufferAddChar, 51
+	;fastcall InputBufferAddChar, 51
+	;fastcall InputBufferAddChar, 51
+	;fastcall InputBufferAddChar, 51
 	fastcall DrawPixelText, 0, 0, _gr_str_test, $ffffffff
+	fastcall DrawPixelText, 0, 100, _gr_input_buffer, $ffffffff
 
 	fastcall DrawPixelChar, 50+0, 50-16, 10, $ffff2f29
 	fastcall DrawPixelChar, 50+8+2, 50-16, 3, $ffff2f29
