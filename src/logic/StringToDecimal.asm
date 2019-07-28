@@ -4,27 +4,32 @@
 ;
 ;------------------------------------------------------------------------
 
-proc StringToDecimal uses rax rbx rcx rdx, _str:QWORD ; _str saved in rcx
+proc StringToDecimal uses rbx, _str:QWORD ; _str saved in rcx
+    mov [_str], rcx            ; The String   
+    xor rax,rax                ; The output value
+    xor r8,r8                  ; Current character
 
-mov rcx, [_str] ; The String   
-xor rax,rax     ; Accumulator
-xor rbx, rbx    ; Byte Pointer
+    .mainloop:
+    ; r8b := str[rbx]
+    mov r8b, byte [rcx + rbx]   ; Gets a character from the string
 
-.mainloop:
-    xor rdx, rdx               
-    mov dl, byte [rcx + rbx]   ; Gets a character from the string
-    cmp rcx, '0'               ; Greater than 0 ?
+    ; if (dl >= '0' && dl <= '9')
+    cmp r8b, '0'
     jl .done
-    cmp rcx, '9'               ; Lower than 9?
+    cmp r8b, '9'
     jg .done
-    sub rcx, '0'               ; Current Byte - ASCII 48 = Decimal Number
-    imul rax, 10               ; Multiplies accumulator by ten
-    add rax, rdx
-    inc rbx                    ; Ready for next character
+
+    sub r8b, '0'                ; Current Byte - ASCII 48 = Decimal Number
+
+    ; rax := (rax * 10) + r8b
+    imul rax, 10
+    add rax, r8
+
+    ; rbx += 1
+    inc rbx
     jmp .mainloop
     
-.done:
-    fastcall PrintString, rax
+    .done:
     ret
 endp
 

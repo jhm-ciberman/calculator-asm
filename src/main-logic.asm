@@ -45,13 +45,9 @@ main:
     fastcall PrintString, _lg_line_bk
 
     fastcall StringToDecimal, _lg_str
+    invoke printf, _format_d, rax
     ;fastcall PrintBinary, _lg_int
     fastcall PrintString, _lg_line_bk
-
-    push _lg_str
-    push _format_input
-    invoke scanf
-    add esp, 8
 
 	invoke exit
 	ret
@@ -59,17 +55,17 @@ main:
 section '.data' data readable writeable
 
 ; Test
-_numIn dq "Numero: ", 0                       ; TEST
+_numIn db "Numero: ", 0                       ; TEST
 _format_output  TCHAR "El numero es ", 0      ; TEST
-_format_input dq "%s", 0                      ; TEST
-
+_format_input db "%s", 0                      ; TEST
+_format_d db "%d", 0
 ; Strings
 _lg_int dq ?                                  ; Integer
-_lg_str rq 256                               ; Receives any string from main-graphic
-_lg_str_ok  dq "Ok", 10, 0                    ; 'Ok' string
-_lg_line_bk dq 10, 0                          ;  line break 
-_lg_s0  dq "0", 0                             ; '0' string
-_lg_s1  dq "1", 0                             ; '1' string
+_lg_str rb 256                               ; Receives any string from main-graphic
+_lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
+_lg_line_bk db 10, 0                          ;  line break 
+_lg_s0  db "0", 0                             ; '0' string
+_lg_s1  db "1", 0                             ; '1' string
 
 section '.idata' data import readable
 
