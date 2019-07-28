@@ -50,9 +50,20 @@ start:
 section '.data' data readable writeable
 
 	; strings
-	_gr_str_title      TCHAR 'Calculadora en PostFijo',0
-	_gr_str_error      TCHAR 'Startup failed.',0
-	_gr_str_test       TCHAR 'Testing line breaks',10,'string... with fancy chars: ', 12, 32, 13, 32, 140, 0
+	_gr_str_title             TCHAR 'Postfix calculator',0
+	_gr_str_error             TCHAR 'Startup failed.',0
+	_gr_str_console_start     TCHAR 175,32,0
+	_gr_str_console_cursor    TCHAR 219,0
+
+	; colours
+	_gr_col_primary       dd $ffff2222
+	_gr_col_text          dd $ffc0c0c0
+	_gr_col_muted         dd $ffa0a0a0
+	_gr_col_background    dd $ff222222
+
+	; layout
+	_gr_margin_top        db 5
+	_gr_margin_left       db 5
 
 	; Window
 	_gr_str_class      TCHAR 'CALCWIN64',0              ; class name
@@ -76,7 +87,9 @@ section '.data' data readable writeable
 	; Input
 	_gr_input_buffer       rb 255                       ; Max input = 255
 	_gr_input_char_count   db 0                         ; Current character count
-
+	
+	; System time
+	_gr_system_time    SYSTEMTIME                       ; The current system time
 
 	include 'graphic/font.asm'
 
@@ -93,4 +106,6 @@ section '.idata' import data readable writeable
 		SetDIBitsToDevice,'SetDIBitsToDevice'
 
     import msvcrt,\
-        strlen ,'strlen'
+        strlen, 'strlen', \
+		malloc, 'malloc', \
+		free, 'free'
