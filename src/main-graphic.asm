@@ -11,8 +11,8 @@ WIN_WIDTH  equ 800
 WIN_HEIGHT equ 600
 
 ; Application virtual buffer
-APP_PIXEL_SCALEX equ 2
-APP_PIXEL_SCALEY equ 2
+APP_PIXEL_SCALEX equ 4
+APP_PIXEL_SCALEY equ 4
 APP_WIDTH  equ WIN_WIDTH/APP_PIXEL_SCALEX
 APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
 
@@ -20,6 +20,13 @@ APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
 include 'graphic/AppInit.asm'
 include 'graphic/AppUpdate.asm'
 include 'graphic/ThreadProcessMessages.asm'
+
+include 'graphic/arraylist/ArrayListCreate.asm'
+include 'graphic/arraylist/ArrayListGet.asm'
+include 'graphic/arraylist/ArrayListPush.asm'
+include 'graphic/arraylist/ArrayListSize.asm'
+
+include 'graphic/console/ConsoleInit.asm'
 
 include 'graphic/window/WindowSurfaceFlush.asm'
 include 'graphic/window/WindowCreate.asm'
@@ -93,6 +100,14 @@ section '.data' data readable writeable
 
 	include 'graphic/font.asm'
 
+	struct ARRAYLIST
+		allocsize   dq 0   ; The real allocated size
+		size        dq 0   ; The real size
+		list        dq ?   ; The list size
+	ends
+
+	_gr_console_log ARRAYLIST 
+
 section '.idata' import data readable writeable
 
 	library kernel32,'KERNEL32.DLL',\
@@ -108,4 +123,6 @@ section '.idata' import data readable writeable
     import msvcrt,\
         strlen, 'strlen', \
 		malloc, 'malloc', \
+		realloc, 'realloc', \
+		strcpy, 'strcpy', \
 		free, 'free'
