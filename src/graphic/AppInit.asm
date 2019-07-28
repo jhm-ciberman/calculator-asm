@@ -30,7 +30,7 @@ proc AppInit
 	fastcall ArrayListPush, [list], 110
 	fastcall ArrayListPush, [list], 110
 	fastcall ArrayListPush, [list], 20
-	fastcall ArrayListPop, [list]
+	fastcall ArrayListGetLast, [list]
 
 	;fastcall ArrayListSize, [list]
 	;dec eax
@@ -40,7 +40,7 @@ proc AppInit
 
 	fastcall ArrayListSize, [list]
 	fastcall DrawPixel, eax, 52, $ff00ff00
-	
+
 	fastcall DrawPixel, 5, 51, $ffffffff
 	fastcall DrawPixel, 10, 51, $ffffffff
 	fastcall DrawPixel, 15, 51, $ffffffff

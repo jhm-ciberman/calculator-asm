@@ -23,6 +23,7 @@ include 'graphic/ThreadProcessMessages.asm'
 
 include 'arraylist/ArrayListCreate.asm'
 include 'arraylist/ArrayListGet.asm'
+include 'arraylist/ArrayListGetLast.asm'
 include 'arraylist/ArrayListPop.asm'
 include 'arraylist/ArrayListPush.asm'
 include 'arraylist/ArrayListSize.asm'
