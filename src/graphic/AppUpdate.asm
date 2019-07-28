@@ -8,9 +8,9 @@ proc AppUpdate
 	fastcall DrawClear, [_gr_col_background]
 
 	xor eax, eax
-	mov al, [_gr_margin_top]
+	mov al, [_gr_margin_y]
 	mov [y], eax
-	mov al, [_gr_margin_left]
+	mov al, [_gr_margin_x]
 	mov [x], eax
 
 	; draw the ">> " string at the start of the input line

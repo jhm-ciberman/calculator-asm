@@ -16,45 +16,12 @@ APP_PIXEL_SCALEY equ 4
 APP_WIDTH  equ WIN_WIDTH/APP_PIXEL_SCALEX
 APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
 
-
-include 'graphic/AppInit.asm'
-include 'graphic/AppUpdate.asm'
-include 'graphic/ThreadProcessMessages.asm'
-
-include 'arraylist/ArrayListCreate.asm'
-include 'arraylist/ArrayListGet.asm'
-include 'arraylist/ArrayListGetLast.asm'
-include 'arraylist/ArrayListPop.asm'
-include 'arraylist/ArrayListPush.asm'
-include 'arraylist/ArrayListSize.asm'
-
-include 'graphic/console/ConsoleInit.asm'
-
-include 'graphic/window/WindowSurfaceFlush.asm'
-include 'graphic/window/WindowCreate.asm'
-include 'graphic/window/WindowDcInit.asm'
-include 'graphic/window/WindowProc.asm'
-
-include 'graphic/input/InputBufferAddChar.asm'
-include 'graphic/input/InputBufferRemoveChar.asm'
-include 'graphic/input/InputBufferClear.asm'
-include 'graphic/input/InputOnKeyDown.asm'
-include 'graphic/input/InputSend.asm'
-
-include 'graphic/draw/DrawBuffer.asm'
-include 'graphic/draw/DrawBufferScaled.asm'
-include 'graphic/draw/DrawClear.asm'
-include 'graphic/draw/DrawSetTarget.asm'
-include 'graphic/draw/DrawPixel.asm'
-include 'graphic/draw/DrawPixelChar.asm'
-include 'graphic/draw/DrawPixelText.asm'
-include 'graphic/draw/DrawLineHorizontal.asm'
-include 'graphic/draw/DrawRectangle.asm'
-
+include 'graphic/include.asm'
+include 'arraylist/include.asm'
 
 start:
 	sub	rsp,8		; Make stack dqword aligned
-	fastcall AppInit
+	fastcall Main
 
 section '.data' data readable writeable
 
@@ -71,8 +38,8 @@ section '.data' data readable writeable
 	_gr_col_background    dd $ff222222
 
 	; layout
-	_gr_margin_top        db 5
-	_gr_margin_left       db 5
+	_gr_margin_y          db 5
+	_gr_margin_x          db 5
 
 	; Window
 	_gr_str_class      TCHAR 'CALCWIN64',0              ; class name
@@ -101,14 +68,6 @@ section '.data' data readable writeable
 	_gr_system_time    SYSTEMTIME                       ; The current system time
 
 	include 'graphic/font.asm'
-
-	struct ARRAYLIST
-		allocsize   dq 0   ; The real allocated size
-		size        dq 0   ; The real size
-		list        dq ?   ; The list size
-	ends
-
-	_gr_console_log ARRAYLIST 
 
 section '.idata' import data readable writeable
 
