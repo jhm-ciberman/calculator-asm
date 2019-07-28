@@ -1,5 +1,5 @@
 ;;;
-; Draws a buffer scaled
+; Draws the specified buffer on the current target buffer scaling it
 ; 
 ; params: 
 ;   buffer       - The memory address of the first pixel data of the sprite

@@ -1,3 +1,9 @@
+;;;
+; Handles the keyboard input for the input field.
+;
+; params:
+;   keycode - The windows virtual key code for the key that was pressed
+;;;
 proc InputOnKeyDown, keycode:QWORD
     ; Complete list of keycodes: https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
     mov [keycode], rcx

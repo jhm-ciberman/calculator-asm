@@ -1,3 +1,7 @@
+;;;
+; Sends the win buffer to the window device context
+; It effectively draws the the content of the buffer on the window
+;;;
 proc WindowSurfaceFlush
 
     invoke SetDIBitsToDevice, \

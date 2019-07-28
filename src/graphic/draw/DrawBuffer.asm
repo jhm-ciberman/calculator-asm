@@ -1,5 +1,5 @@
 ;;;
-; Draws a buffer
+; Draws the specified buffer on the current target buffer
 ; 
 ; params: 
 ;   buffer       - The memory address of the first pixel data of the sprite

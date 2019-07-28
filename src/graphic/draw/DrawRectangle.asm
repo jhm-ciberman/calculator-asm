@@ -1,4 +1,3 @@
-
 ;;;
 ; Draws a rectangle filled with the specified colour
 ;

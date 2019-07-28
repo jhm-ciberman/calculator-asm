@@ -1,9 +1,14 @@
 ;;;
 ; Creates the main window.
 ;
-; returns: The window handle or 0 if fails
+; params:
+;   width  - The initial width of the window
+;   height - The initial height of the window
+;   title  - A pointer to a null terminated string with the title of the window
+;
+; returns: (QWORD) The window handle or 0 if fails
 ;;;
-proc WindowCreate, width, height, title
+proc WindowCreate, width:QWORD, height:QWORD, title:QWORD
     mov [width], rcx
     mov [height], rdx
     mov [title], r8

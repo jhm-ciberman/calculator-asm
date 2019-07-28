@@ -2,8 +2,8 @@
 ; The WindowProc callback. It is called by the windows api to handle window events
 ;
 ; params:
-;     hwnd - The window handler
-;     wmsg - The message
+;     hwnd   - The window handler
+;     wmsg   - The message
 ;     wparam - The w param of the message (depends of the message type)
 ;     lparam - The l param of the message (depends of the message type)
 ;

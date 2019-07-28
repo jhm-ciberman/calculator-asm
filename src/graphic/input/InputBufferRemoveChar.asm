@@ -1,3 +1,6 @@
+;;;
+; Removes the last character in the input buffer
+;;;
 proc InputBufferRemoveChar
     ; if (char_count = 0) then return
     mov dl, [_gr_input_char_count]

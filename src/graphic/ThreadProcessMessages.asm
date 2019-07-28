@@ -1,3 +1,7 @@
+;;;
+; Thread message Handling. Handles all the incoming window messages of the thread and dispatch them 
+; to the window. If the thread received an exit event, it closes the window
+;;;
 align 16
 proc ThreadProcessMessages
 

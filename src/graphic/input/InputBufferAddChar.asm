@@ -1,3 +1,9 @@
+;;;
+; Adds a character to the input buffer
+;
+; params
+;   char - The character to add
+;;;
 proc InputBufferAddChar, char:BYTE
     ; if (char_count = 254) then return
     mov dl, [_gr_input_char_count]

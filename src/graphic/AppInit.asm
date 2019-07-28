@@ -1,3 +1,6 @@
+;;;
+; This method is called when the app inits. It is the main method
+;;;
 proc AppInit
     fastcall WindowCreate, WIN_WIDTH, WIN_HEIGHT, _gr_str_title
 	

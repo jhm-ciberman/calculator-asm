@@ -1,3 +1,6 @@
+;;;
+; This method is called once per frame. It should update the content of the screen
+;;;
 proc AppUpdate
 	local x: DWORD, y: DWORD, len: DWORD
 

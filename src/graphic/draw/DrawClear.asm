@@ -1,4 +1,10 @@
-proc DrawClear uses rbx, rdi, colour
+;;;
+; Clears all the screen using a colour
+;
+; params:
+; 	colour - The colour to clear the screen in format ($AARRGGBB). Eg: $ffff0000 for a red colour
+;;;
+proc DrawClear uses rbx, rdi, colour: DWORD
 	mov ebx, ecx                    ; rbx = colour
 
 	; calculates the total number of pixels (rax := w*h)

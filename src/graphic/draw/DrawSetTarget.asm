@@ -2,7 +2,7 @@
 ; Sets the drawing target surface used by all the other drawing functions
 ; 
 ; params:
-;   width - The width of the surface
+;   width  - The width of the surface
 ;   height - The height of the surface
 ;   buffer - A pointer to the colour buffer array
 ;;;

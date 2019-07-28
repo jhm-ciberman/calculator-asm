@@ -2,9 +2,9 @@
 ; Draws a pixel on the screen
 ; 
 ; params: 
-;   x   (rcx) - The x position 
-;   y   (rdx) - The y position
-;   col (r8)  - The colour to fill the pixel
+;   x   - The x position 
+;   y   - The y position
+;   col - The colour to fill the pixel
 ;;;
 proc DrawPixel uses rbx, x, y, colour
     ; if (x >= dest_w) return;
