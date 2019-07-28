@@ -21,10 +21,11 @@ include 'graphic/AppInit.asm'
 include 'graphic/AppUpdate.asm'
 include 'graphic/ThreadProcessMessages.asm'
 
-include 'graphic/arraylist/ArrayListCreate.asm'
-include 'graphic/arraylist/ArrayListGet.asm'
-include 'graphic/arraylist/ArrayListPush.asm'
-include 'graphic/arraylist/ArrayListSize.asm'
+include 'arraylist/ArrayListCreate.asm'
+include 'arraylist/ArrayListGet.asm'
+include 'arraylist/ArrayListPop.asm'
+include 'arraylist/ArrayListPush.asm'
+include 'arraylist/ArrayListSize.asm'
 
 include 'graphic/console/ConsoleInit.asm'
 
