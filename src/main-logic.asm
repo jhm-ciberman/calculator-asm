@@ -27,10 +27,12 @@ entry main
 section '.text' code readable executable
 
 include 'win64a.inc'
+include 'arraylist/include.asm'
 include 'logic/NewString.asm'
 include 'logic/PrintBinary.asm'
 include 'logic/PrintString.asm'
 include 'logic/StringToDecimal.asm'
+include 'logic/ParseString.asm'
 
 main:
     sub	rsp, 8		; Make stack dqword aligned
@@ -39,17 +41,21 @@ main:
 
     fastcall PrintString, _numIn
  
-    invoke scanf, _format_input, _lg_str
+    invoke scanf, _format_input, _lg_str_user
 
-    fastcall PrintString, _lg_str_ok
+    ;fastcall PrintString, _lg_str_ok
     fastcall PrintString, _lg_line_bk
 
-    fastcall StringToDecimal, _lg_str
-    invoke printf, _format_d, rax
+    fastcall ArrayListCreate, 20
+    mov [_lg_stack], rax
+
+
+    fastcall ParseString, _lg_str_user
     ;fastcall PrintBinary, _lg_int
     fastcall PrintString, _lg_line_bk
 
-	invoke exit
+	invoke exit, 0
+    xor rax, rax
 	ret
 
 section '.data' data readable writeable
@@ -59,13 +65,18 @@ _numIn db "Numero: ", 0                       ; TEST
 _format_output  TCHAR "El numero es ", 0      ; TEST
 _format_input db "%s", 0                      ; TEST
 _format_d db "%d", 0
+
 ; Strings
 _lg_int dq ?                                  ; Integer
 _lg_str rb 256                               ; Receives any string from main-graphic
+_lg_str_user rb 256                               ; Receives any string from main-graphic
 _lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
 _lg_line_bk db 10, 0                          ;  line break 
 _lg_s0  db "0", 0                             ; '0' string
 _lg_s1  db "1", 0                             ; '1' string
+
+;Stack
+_lg_stack dq 0                                ; Pointer to Stack
 
 section '.idata' data import readable
 
@@ -74,4 +85,9 @@ section '.idata' data import readable
     import msvcrt,\
         printf ,'printf',\
         scanf  ,'scanf',\
-        exit   ,'exit'
+        exit   ,'exit',\
+		malloc, 'malloc', \
+		realloc, 'realloc', \
+		strcpy, 'strcpy', \
+		free, 'free', \
+		strcmp, 'strcmp'
