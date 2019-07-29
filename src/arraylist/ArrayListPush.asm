@@ -32,6 +32,7 @@ proc ArrayListPush, list:QWORD, value:QWORD
 
     .insert_item:
     ; array[size] := value
+    xor rdx, rdx
     mov edx, DWORD[rcx + 4]
     mov r9, [value]
     mov r8,  QWORD[rcx + 8]  ; array pointer

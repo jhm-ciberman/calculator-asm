@@ -8,11 +8,11 @@
 ;   height - The height of the rectangle
 ;   col    - The color to fill the rectangle
 ;;; 
-proc DrawRectangle, x, y, width, height, colour
-    mov [x], rcx
-    mov [y], rdx
-    mov [width], r8
-    mov [height], r9
+proc DrawRectangle, x:DWORD, y:DWORD, width:DWORD, height:DWORD, colour:DWORD
+    mov [x], ecx
+    mov [y], edx
+    mov [width], r8d
+    mov [height], r9d
 
     ; while (height != 0)
     cmp [height], 0 

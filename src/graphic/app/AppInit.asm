@@ -4,5 +4,6 @@
 proc AppInit
     fastcall InputBufferClear
 
+    fastcall ConsoleInit
 	ret
 endp

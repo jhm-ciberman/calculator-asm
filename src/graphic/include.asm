@@ -1,10 +1,16 @@
 
 include 'Main.asm'
-include 'AppInit.asm'
-include 'AppUpdate.asm'
 include 'ThreadProcessMessages.asm'
 
+include 'app/AppInit.asm'
+include 'app/AppUpdate.asm'
+include 'app/AppDrawInputLine.asm'
+include 'app/AppDrawLogo.asm'
+
 include 'console/ConsoleInit.asm'
+include 'console/ConsoleAddCommand.asm'
+include 'console/StringClone.asm'
+
 include 'window/WindowSurfaceFlush.asm'
 include 'window/WindowCreate.asm'
 include 'window/WindowDcInit.asm'
