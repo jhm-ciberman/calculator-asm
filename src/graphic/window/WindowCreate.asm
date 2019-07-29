@@ -45,18 +45,18 @@ proc WindowCreate, width:QWORD, height:QWORD, title:QWORD
 
     ; Create the main window
 	invoke	CreateWindowEx, \
-        0, \                                     ; Optional window styles
-        _gr_str_class, \                         ; Window class name
-        [title], \                               ; Window title
-        WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU, \     ; Window style
-        CW_USEDEFAULT, \                         ; Position x
-        CW_USEDEFAULT, \                         ; Position y
-        [width], \                               ; Size width
-        [height], \                              ; Size height
-        NULL, \                                  ; Parent window    
-        NULL, \                                  ; Menu
-        [_gr_wc.hInstance], \                    ; Instance handle
-        NULL                                     ; Additional application data
+        0, \                                                ; Optional window styles
+        _gr_str_class, \                                    ; Window class name
+        [title], \                                          ; Window title
+        WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU+WS_MAXIMIZEBOX, \     ; Window style
+        CW_USEDEFAULT, \                                    ; Position x
+        CW_USEDEFAULT, \                                    ; Position y
+        [width], \                                          ; Size width
+        [height], \                                         ; Size height
+        NULL, \                                             ; Parent window    
+        NULL, \                                             ; Menu
+        [_gr_wc.hInstance], \                               ; Instance handle
+        NULL                                                ; Additional application data
 
 	test	rax,rax
 	jz	.error

@@ -32,6 +32,11 @@ proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
 	; je      .wmkeyup
 	cmp     edx,WM_KEYDOWN
 	je      .wmkeydown
+	;cmp     edx,WM_EXITSIZEMOVE
+	;je      .wmexitsizemove
+	cmp     edx,WM_SIZE
+	je      .wmexitsizemove
+	
 	.defwndproc:
 	; if noone of the event types match, pass the event handling to the OS
 	invoke	DefWindowProc,rcx,rdx,r8,r9
@@ -56,6 +61,11 @@ proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
 
 	.wmkeydown:
 	fastcall InputOnKeyDown, r8
+	xor eax, eax
+	ret
+
+	.wmexitsizemove:
+	fastcall AppRecalculateWindowSize
 	xor eax, eax
 	ret
 

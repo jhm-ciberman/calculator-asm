@@ -6,6 +6,7 @@ include 'app/AppInit.asm'
 include 'app/AppUpdate.asm'
 include 'app/AppDrawInputLine.asm'
 include 'app/AppDrawLogo.asm'
+include 'app/AppRecalculateWindowSize.asm'
 
 include 'console/ConsoleInit.asm'
 include 'console/ConsoleAddCommand.asm'
@@ -13,7 +14,6 @@ include 'console/StringClone.asm'
 
 include 'window/WindowSurfaceFlush.asm'
 include 'window/WindowCreate.asm'
-include 'window/WindowDcInit.asm'
 include 'window/WindowProc.asm'
 
 include 'input/InputBufferAddChar.asm'
@@ -23,6 +23,7 @@ include 'input/InputOnKeyDown.asm'
 include 'input/InputSend.asm'
 
 include 'draw/BufferCreate.asm'
+include 'draw/BufferResize.asm'
 include 'draw/DrawBuffer.asm'
 include 'draw/DrawBufferScaled.asm'
 include 'draw/DrawClear.asm'

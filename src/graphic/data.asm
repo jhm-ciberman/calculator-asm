@@ -26,8 +26,8 @@ _gr_margin_left       db 5
 _gr_mouse_x        dq 0
 _gr_mouse_y        dq 0
 
-_gr_winbuffer      dq ?  ; A pointer to the main window real framebuffer (real window size)
-_gr_appbuffer      dq ?  ; A pointer to the application virtual framebuffer (smaller)
+_gr_winbuffer      dq 0  ; A pointer to the main window real framebuffer (real window size)
+_gr_appbuffer      dq 0  ; A pointer to the application virtual framebuffer (smaller)
 
 ; System time
 _gr_system_time    SYSTEMTIME                       ; The current system time

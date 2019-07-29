@@ -16,5 +16,11 @@ proc BufferCreate, width:DWORD, height:DWORD
     shl eax, 4
 
     invoke malloc, eax
+    cmp eax, 0
+    je .error
+    ret
+
+    .error:
+    invoke	MessageBox,NULL,_gr_str_error,NULL,MB_ICONERROR+MB_OK
     ret
 endp
