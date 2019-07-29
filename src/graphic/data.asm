@@ -4,6 +4,15 @@ _gr_str_error             TCHAR 'Startup failed.',0
 _gr_str_console_start     TCHAR 175,32,0
 _gr_str_console_cursor    TCHAR 219,0
 
+_gr_str_help_url          TCHAR 'https://github.com/jhm-ciberman/calculator-asm/blob/master/README.md',0
+_gr_str_showing_help      TCHAR 'Opening help in default web browser',0
+_gr_str_unknown           TCHAR 'Unknown command. Type help to see all commands',0
+_gr_str_byebye            TCHAR 'Bye bye! ',1,0
+
+_gr_str_cmd_clear         TCHAR 'clear',0
+_gr_str_cmd_exit          TCHAR 'exit',0
+_gr_str_cmd_help          TCHAR 'help',0
+
 ; colours
 _gr_col_primary       dd $ffff2222
 _gr_col_secondary     dd $ff2074b0
@@ -31,7 +40,6 @@ _gr_appbuffer      dq 0  ; A pointer to the application virtual framebuffer (sma
 
 ; System time
 _gr_system_time    SYSTEMTIME                       ; The current system time
-
 
 include 'console/data.asm'
 include 'window/data.asm'

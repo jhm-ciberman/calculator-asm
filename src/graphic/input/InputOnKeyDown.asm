@@ -104,7 +104,7 @@ proc InputOnKeyDown, keycode:QWORD
     jmp .addchar
     
     .vkreturn: ; enter key
-    fastcall InputSend
+    fastcall InputSend, _gr_input_buffer
     jmp .finish
 
     .addchar:

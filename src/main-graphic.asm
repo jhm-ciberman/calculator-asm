@@ -21,16 +21,19 @@ section '.idata' import data readable writeable
 	library kernel32,'KERNEL32.DLL',\
 		user32,'USER32.DLL', \
 		gdi,'GDI32.DLL', \
+		shell32,'SHELL32.DLL', \
 		msvcrt, "MSVCRT.DLL"
 
 	include 'api\kernel32.inc'
 	include 'api\user32.inc'
 	import gdi,\
 		SetDIBitsToDevice,'SetDIBitsToDevice'
-
+	import shell32,\
+		ShellExecute, 'ShellExecuteA'
     import msvcrt,\
         strlen, 'strlen', \
 		malloc, 'malloc', \
 		realloc, 'realloc', \
 		strcpy, 'strcpy', \
-		free, 'free'
+		free, 'free', \
+		strcmp, 'strcmp'
