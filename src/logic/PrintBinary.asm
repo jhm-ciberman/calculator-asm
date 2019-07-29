@@ -31,6 +31,5 @@ xor rdx, rdx
     jnz .mainloop
 
 .done:
-    fastcall PrintString, _lg_line_bk
     ret
 endp

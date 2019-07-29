@@ -8,6 +8,7 @@ proc StringToDecimal uses rbx, _str:QWORD ; _str saved in rcx
     mov [_str], rcx            ; The String   
     xor rax,rax                ; The output value
     xor r8,r8                  ; Current character
+    xor rbx, rbx               ; Character Index
 
     .mainloop:
     ; r8b := str[rbx]
