@@ -1,5 +1,5 @@
 ;;;
-; Draws a buffer
+; Draws the specified buffer on the current target buffer
 ; 
 ; params: 
 ;   buffer       - The memory address of the first pixel data of the sprite
@@ -34,7 +34,7 @@ proc DrawBuffer, buffer:QWORD, bufferwidth:DWORD, bufferheight:DWORD, x:DWORD, y
     jnl .endfor_j
 
     mov rax, [buffer]
-    fastcall DrawRectangle, [x], [y], [scalex], [scaley], QWORD [rax]
+    fastcall DrawPixel, [x], [y], DWORD [rax]
 
     ; buffer += 4;
     mov rax, [buffer]

@@ -1,3 +1,9 @@
+;;;
+; Thread message Handling. Handles all the incoming window messages of the thread and dispatch them 
+; to the window. If the thread received an exit event, it closes the window.
+;
+; returns: (QWORD) 1 if all is ok. 0 if the app must be closed.
+;;;
 align 16
 proc ThreadProcessMessages
 
@@ -27,11 +33,11 @@ proc ThreadProcessMessages
     jmp .peekmessage
 
     .return:
+    xor rax, rax
+    inc rax
     ret
 
     .endapp:
-    invoke ReleaseDC,[_gr_whandle],[_gr_dc]
-	invoke DestroyWindow,[_gr_whandle]
-	invoke ExitProcess,[_gr_msg.wParam]
+    xor rax, rax
     ret
 endp
