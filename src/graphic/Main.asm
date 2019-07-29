@@ -1,18 +1,36 @@
 proc Main
-    fastcall WindowCreate, WIN_WIDTH, WIN_HEIGHT, _gr_str_title
+    fastcall WindowCreate, 800, 600, _gr_str_title
 	
 	test rax, rax
 	jz .error
 	mov [_gr_whandle], rax  ; save the whandle
 
-	fastcall WindowDcInit, WIN_WIDTH, WIN_HEIGHT
+	invoke GetClientRect, [_gr_whandle], _gr_client_rect
+	
+	mov eax, [_gr_client_rect.right]
+	mov [_gr_win_width], eax
+	mov eax, [_gr_client_rect.bottom]
+	mov [_gr_win_height], eax
+
+	xor edx, edx
+	; app_width = win_width / pixel_scale_x
+	mov eax, [_gr_win_width]
+	idiv [_gr_pixel_scale_x]
+	mov [_gr_app_width], eax
+
+	; app_height = win_height / pixel_scale_y
+	mov eax, [_gr_win_height]
+	idiv [_gr_pixel_scale_y]
+	mov [_gr_app_height], eax
+
+	fastcall WindowDcInit, [_gr_win_width], [_gr_win_height]
 	invoke ShowWindow,[_gr_whandle],SW_NORMAL
 	invoke UpdateWindow,[_gr_whandle]
 
-	fastcall BufferCreate, WIN_WIDTH, WIN_HEIGHT
+	fastcall BufferCreate, [_gr_win_width], [_gr_win_height]
 	mov [_gr_winbuffer], rax
 
-	fastcall BufferCreate, APP_WIDTH, APP_HEIGHT
+	fastcall BufferCreate, [_gr_app_width], [_gr_app_height]
 	mov [_gr_appbuffer], rax
 
     ; call the app init function
@@ -28,14 +46,14 @@ proc Main
     je .exitapp
 
     ; set the draw target to the app buffer
-	fastcall DrawSetTarget, APP_WIDTH, APP_HEIGHT, [_gr_appbuffer]
+	fastcall DrawSetTarget, [_gr_app_width], [_gr_app_height], [_gr_appbuffer]
 
     ; call the app update function
 	fastcall AppUpdate
 
     ; copy the app buffer to the win buffer and sends its content to the window
-	fastcall DrawSetTarget, WIN_WIDTH, WIN_HEIGHT, [_gr_winbuffer]
-	fastcall DrawBufferScaled, [_gr_appbuffer], APP_WIDTH, APP_HEIGHT, 0, 0, APP_PIXEL_SCALEX, APP_PIXEL_SCALEY
+	fastcall DrawSetTarget, [_gr_win_width], [_gr_win_height], [_gr_winbuffer]
+	fastcall DrawBufferScaled, [_gr_appbuffer], [_gr_app_width], [_gr_app_height], 0, 0, [_gr_pixel_scale_x], [_gr_pixel_scale_y]
 	fastcall WindowSurfaceFlush
     
     jmp .mainloop

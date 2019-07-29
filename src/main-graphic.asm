@@ -5,16 +5,6 @@ include 'win64a.inc'
 
 section '.text' code readable executable
 
-; Frame real buffer
-WIN_WIDTH  equ 800
-WIN_HEIGHT equ 600
-
-; Application virtual buffer
-APP_PIXEL_SCALEX equ 4
-APP_PIXEL_SCALEY equ 4
-APP_WIDTH  equ WIN_WIDTH/APP_PIXEL_SCALEX
-APP_HEIGHT equ WIN_HEIGHT/APP_PIXEL_SCALEY
-
 include 'graphic/include.asm'
 include 'arraylist/include.asm'
 

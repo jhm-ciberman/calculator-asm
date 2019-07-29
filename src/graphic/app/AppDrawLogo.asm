@@ -1,19 +1,41 @@
 proc AppDrawLogo
+	local x:DWORD, y:DWORD, scale:DWORD
+	mov [scale], 4
 
-	fastcall DrawBufferScaled, _gr_logo_data, [_gr_logo_w], [_gr_logo_h], 75, 25, 3, 3
 
-	; draw text outline
-	fastcall DrawPixelText, 30-1, 80-1, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30-1, 80+0, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30-1, 80+1, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30+0, 80+1, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30+0, 80-1, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30+1, 80-1, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30+1, 80+0, _gr_str_title, [_gr_col_text]
-	fastcall DrawPixelText, 30+1, 80+1, _gr_str_title, [_gr_col_text]
+	; x = (APP_WIDTH - logo_w * scale) / 2
+	mov eax, [_gr_logo_w]
+	imul [scale]
+	mov edx, eax
+	mov eax, [_gr_app_width]
+	sub eax, edx
+	shr eax, 1
+	mov [x], eax
 
-	; draw text interior
-	fastcall DrawPixelText, 30, 80, _gr_str_title, [_gr_col_secondary]
+	; y = APP_HEIGHT / 4
+	mov eax, [_gr_app_height]
+	shr eax, 2
+	mov [y], eax
+
+	fastcall DrawBufferScaled, _gr_logo_data, [_gr_logo_w], [_gr_logo_h], [x], [y], [scale], [scale]
+
+	; x = (APP_WIDTH - strlen(str_title) * 8) / 2
+	invoke strlen, _gr_str_title
+	shl eax, 3
+	mov edx, eax
+	mov eax, [_gr_app_width]
+	sub eax, edx
+	shr eax, 1
+	mov [x], eax
+
+	; y = y + logo_h * scale + 20
+	xor edx, edx
+	mov eax, [_gr_logo_h]
+	imul [scale]
+	add eax, 20
+	add [y], eax
+
+	fastcall DrawPixelTextOutline, [x], [y], _gr_str_title, [_gr_col_title], [_gr_col_secondary]
 
     ret
 endp

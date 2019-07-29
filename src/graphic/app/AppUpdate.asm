@@ -9,7 +9,7 @@ proc AppUpdate
 
 	; y = APP_HEIGHT - 16 - margin_y
 	xor ecx, ecx
-	mov eax, APP_HEIGHT
+	mov eax, [_gr_app_height]
 	mov cl, [_gr_margin_bottom]
 	sub eax, ecx
 	mov cl, 16

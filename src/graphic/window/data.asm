@@ -5,3 +5,4 @@ _gr_whandle        dq ?                             ; handle
 _gr_dc             dq ?                             ; device context
 _gr_bmi            BITMAPINFOHEADER                 ; bitmap info header
 _gr_msg            MSG                              ; the message to process in the message queue
+_gr_client_rect    RECT                             ; The client rect area
