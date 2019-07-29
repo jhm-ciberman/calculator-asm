@@ -1,9 +1,14 @@
 ;;;
 ; Creates the main window.
 ;
-; returns: The window handle or 0 if fails
+; params:
+;   width  - The initial width of the window
+;   height - The initial height of the window
+;   title  - A pointer to a null terminated string with the title of the window
+;
+; returns: (QWORD) The window handle or 0 if fails
 ;;;
-proc WindowCreate, width, height, title
+proc WindowCreate, width:QWORD, height:QWORD, title:QWORD
     mov [width], rcx
     mov [height], rdx
     mov [title], r8
@@ -40,18 +45,18 @@ proc WindowCreate, width, height, title
 
     ; Create the main window
 	invoke	CreateWindowEx, \
-        0, \                                     ; Optional window styles
-        _gr_str_class, \                         ; Window class name
-        [title], \                               ; Window title
-        WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU, \     ; Window style
-        CW_USEDEFAULT, \                         ; Position x
-        CW_USEDEFAULT, \                         ; Position y
-        [width], \                               ; Size width
-        [height], \                              ; Size height
-        NULL, \                                  ; Parent window    
-        NULL, \                                  ; Menu
-        [_gr_wc.hInstance], \                    ; Instance handle
-        NULL                                     ; Additional application data
+        0, \                                                ; Optional window styles
+        _gr_str_class, \                                    ; Window class name
+        [title], \                                          ; Window title
+        WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU+WS_MAXIMIZEBOX, \     ; Window style
+        CW_USEDEFAULT, \                                    ; Position x
+        CW_USEDEFAULT, \                                    ; Position y
+        [width], \                                          ; Size width
+        [height], \                                         ; Size height
+        NULL, \                                             ; Parent window    
+        NULL, \                                             ; Menu
+        [_gr_wc.hInstance], \                               ; Instance handle
+        NULL                                                ; Additional application data
 
 	test	rax,rax
 	jz	.error

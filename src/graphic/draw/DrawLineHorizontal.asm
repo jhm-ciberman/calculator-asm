@@ -7,11 +7,11 @@
 ;   width - The width of the line
 ;   col   - The color to fill the line
 ;;;
-proc DrawLineHorizontal, x, y, width, colour
-    mov [x], rcx
-    mov [y], rdx
-    mov [width], r8
-    mov [colour], r9
+proc DrawLineHorizontal, x:DWORD, y:DWORD, width:DWORD, colour:DWORD
+    mov [x], ecx
+    mov [y], edx
+    mov [width], r8d
+    mov [colour], r9d
 
     ; while (width != 0) then
     cmp r8, 0

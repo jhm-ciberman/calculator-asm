@@ -1,3 +1,13 @@
+;;;
+; Draws a null terminated string on the screen using the default included pixel font.
+; This function uses the LF (0xA) character as a line break
+;
+; params:
+;   x      - The x position of the character
+;   y      - The y position of the character
+;   string - A pointer to the null terminated string to draw
+;   colour - The colour to use
+;;;
 proc DrawPixelText, x:DWORD, y:DWORD, string:QWORD, colour:DWORD
     local i:DWORD, xstart: DWORD
     mov [x], ecx

@@ -1,3 +1,12 @@
+;;;
+; Draws an ascii character on the screen using the default pixel font included
+;
+; params:
+;   x      - The x position of the character
+;   y      - The y position of the character
+;   char   - The ascii character to draw
+;   colour - The colour to use
+;;;
 proc DrawPixelChar uses r14, x: DWORD, y:DWORD, char:BYTE, colour: DWORD
     local pbuff:QWORD, i:BYTE, j:BYTE, xstart: DWORD
     mov [x], ecx
