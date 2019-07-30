@@ -20,15 +20,6 @@ mov r10, _lg_str           ; Buffer
 jmp .skipblank
 
 .mainloop:
-    mov [_cc], r8
-    mov [_ci], rbx
-    mov [_bi], r9
-    mov rax, 135
-    invoke  printf, _format_d, rax
-    mov r8, [_cc]
-    mov rbx, [_ci]
-    mov r9, [_bi]
-    mov [_str], rcx
     ; r8b := str[rbx]
     mov rcx, [_str]
     mov r8b, byte [rcx + rbx]   ; Gets a character from the string
@@ -49,8 +40,16 @@ jmp .skipblank
     mov [_ci], rbx
     mov [_bi], r9
     ;fastcall StringToDecimal, _lg_str
-
     
+    ; mov [_cc], r8
+    ; mov [_ci], rbx
+    ; mov [_bi], r9
+    ; mov rax, 135
+    ; invoke  printf, _format_d, rax
+    ; mov r8, [_cc]
+    ; mov rbx, [_ci]
+    ; mov r9, [_bi]
+    ; mov rcx, [_str]
 
     ;fastcall ArrayListPush, [_lg_str],rax
     mov r8, [_cc]
@@ -59,10 +58,19 @@ jmp .skipblank
     mov [_str], rcx
 
 .skipblank:
+    ; mov [_cc], r8
+    ; mov [_ci], rbx
+    ; mov [_bi], r9
+    ; mov rax, 135
+    ; invoke  printf, _format_d, rax
+    ; mov r8, [_cc]
+    ; mov rbx, [_ci]
+    ; mov r9, [_bi]
+    ; mov rcx, [_str]
     mov rcx, [_str]
     mov r8b, byte [rcx + rbx]
     cmp r8b, 32
-    je .skipblank
+    je .addone
     cmp r8b, 0
     je .done
     jmp .mainloop
