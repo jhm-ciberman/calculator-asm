@@ -1,9 +1,7 @@
-;              ### Prints _int as a binary number ###
-;------------------------------------------------------------------------
+;;;
+; Prints _int as a binary number.
 ; User uses the '.b' command to print the stack's top as a binary number.
-;
-;------------------------------------------------------------------------
-
+;;;
 proc PrintBinary uses rax rdx rcx, _int:QWORD ; _int saved in rcx
 
 mov rax, -64        ; counter
