@@ -41,18 +41,19 @@ main:
 
     fastcall PrintString, _numIn
  
-    invoke scanf, _format_input, _lg_str_user
-
-    ;fastcall PrintString, _lg_str_ok
-    fastcall PrintString, _lg_line_bk
+    ;invoke scanf, _format_input, _lg_str_user
 
     fastcall ArrayListCreate, 20
     mov [_lg_stack], rax
 
 
     fastcall ParseString, _lg_str_user
-    ;fastcall PrintBinary, _lg_int
-    fastcall PrintString, _lg_line_bk
+    ; fastcall ArrayListPop, [_lg_stack]
+    ; mov r14, rax
+    ; fastcall ArrayListPop, [_lg_stack]
+    ; add r14, rax
+    fastcall ArrayListPop, [_lg_stack]
+    invoke printf, _format_d, rax
 
 	invoke exit, 0
     xor rax, rax
@@ -63,18 +64,21 @@ section '.data' data readable writeable
 ; Test
 _numIn db "Numero: ", 0                       ; TEST
 _format_output  TCHAR "El numero es ", 0      ; TEST
-_format_input db "%s", 0                      ; TEST
-_format_d db "%d", 0
+_format_input db "%[^\n]", 0                  ; TEST
+_format_s db "%s", 0                          ; TEST
+_format_d db "%d", 0                          ; TEST
 
 ; Strings
 _lg_int dq ?                                  ; Integer
-_lg_str rb 256                               ; Receives any string from main-graphic
-_lg_str_user rb 256                               ; Receives any string from main-graphic
+_lg_str_buffer rb 256                               ; Receives any string from main-graphic
+_lg_str_user db "256 100 20",0                               ; Receives any string from main-graphic
 _lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
 _lg_line_bk db 10, 0                          ;  line break 
 _lg_s0  db "0", 0                             ; '0' string
 _lg_s1  db "1", 0                             ; '1' string
-
+_lg_sA  db "PointA", 10, 0
+_lg_sB  db "PointB", 10, 0
+_lg_sC  db "PointC", 10, 0
 ;Stack
 _lg_stack dq 0                                ; Pointer to Stack
 

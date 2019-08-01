@@ -1,85 +1,72 @@
 ;                       ### Parses a String ###
 ;------------------------------------------------------------------------
 ; Used to parse Strings.
-;
+; Pseudocode: https://repl.it/repls/OutrageousHeftyPhases
 ;------------------------------------------------------------------------
 
 proc ParseString uses rbx, _str:QWORD ; _str saved in rcx
-    local _cc:QWORD, _ci:QWORD, _bi:QWORD
+    local _i:QWORD, _bufferi:QWORD
 
-mov [_str], rcx            ; The String   
-xor r8,r8                  ; Current character
-mov [_cc], r8
-xor rbx, rbx               ; Character Index
-mov [_ci], rbx
-xor r9, r9                 ; Buffer Index
-mov [_bi], r9
-mov r10, _lg_str           ; Buffer
+    mov [_str], rcx            ; The String
+    mov [_i], 0                ;  Character index
+    mov [_bufferi], 0          ; Buffer index
 
-
-jmp .skipblank
-
-.mainloop:
-    ; r8b := str[rbx]
+    ; r8b := str[0]
     mov rcx, [_str]
-    mov r8b, byte [rcx + rbx]   ; Gets a character from the string
-    cmp r8b, 32
-    je .fullstring
+    mov r8b, byte [rcx]
+
+    .main_loop:
+    ; while (cc != 0)
     cmp r8b, 0
+    jz .end_main_loop
+
+    ; if (cc != 32)
+    cmp r8b, 32
+    je .is_space
+
+    ; buff[buffi++] = cc;
+    mov rdx, [_bufferi]
+    mov byte[_lg_str_buffer + rdx], r8b
+    inc [_bufferi]
+    jmp .buffer_is_empty
+
+    .is_space:
+    ; else if (buffi != 0)
+    mov rdx, [_bufferi]
+    cmp rdx, 0
+    je .buffer_is_empty
+
+    ;  buff[buffi] = 0;
+    mov byte[_lg_str_buffer + rdx], 0
+    ; buffi = 0
+    mov [_bufferi], 0
+
+    fastcall StringToDecimal, _lg_str_buffer
+    fastcall ArrayListPush, [_lg_stack], rax
+
+    .buffer_is_empty:
+    ; cc = str[++i];
+    mov rdx, [_i]
+    inc rdx
+    mov rcx, [_str]
+    mov r8b, byte [rcx + rdx]
+    mov [_i], rdx
+
+    jmp .main_loop
+
+    .end_main_loop:
+
+    ; if (buffi != 0)
+    mov rdx, [_bufferi]
+    cmp rdx, 0
     jz .done
-    mov byte [_lg_str + r9], r8b
-    inc r9
-    inc rbx
-    jmp .mainloop
 
-.fullstring:
-    mov byte [_lg_str + r9], 0
-    inc r9
-    inc rbx
-    mov [_cc], r8
-    mov [_ci], rbx
-    mov [_bi], r9
-    ;fastcall StringToDecimal, _lg_str
-    
-    ; mov [_cc], r8
-    ; mov [_ci], rbx
-    ; mov [_bi], r9
-    ; mov rax, 135
-    ; invoke  printf, _format_d, rax
-    ; mov r8, [_cc]
-    ; mov rbx, [_ci]
-    ; mov r9, [_bi]
-    ; mov rcx, [_str]
+    ; buff[buffi] = 0;
+    mov byte[_lg_str_buffer + rdx], 0
 
-    ;fastcall ArrayListPush, [_lg_str],rax
-    mov r8, [_cc]
-    mov rbx, [_ci]
-    mov r9, [_bi]
-    mov [_str], rcx
+    fastcall StringToDecimal, _lg_str_buffer
+    fastcall ArrayListPush, [_lg_stack], rax
 
-.skipblank:
-    ; mov [_cc], r8
-    ; mov [_ci], rbx
-    ; mov [_bi], r9
-    ; mov rax, 135
-    ; invoke  printf, _format_d, rax
-    ; mov r8, [_cc]
-    ; mov rbx, [_ci]
-    ; mov r9, [_bi]
-    ; mov rcx, [_str]
-    mov rcx, [_str]
-    mov r8b, byte [rcx + rbx]
-    cmp r8b, 32
-    je .addone
-    cmp r8b, 0
-    je .done
-    jmp .mainloop
-
-.addone:
-    inc rbx
-    jmp .skipblank
-
-.done:
-    
+    .done:
     ret
 endp
