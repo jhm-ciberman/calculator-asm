@@ -1,0 +1,4 @@
+proc DoPrint
+
+    ret
+endp

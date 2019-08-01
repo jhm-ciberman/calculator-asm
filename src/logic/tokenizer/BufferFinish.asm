@@ -10,8 +10,7 @@ proc BufferFinish
     ; buffi = 0
     mov [_lg_buffer_length], 0
 
-    fastcall StringToDecimal, _lg_buffer_str
-    fastcall ArrayListPush, [_lg_stack], rax
+    fastcall CommandParserProcessCommand, _lg_buffer_str
 
     .done:
     ret

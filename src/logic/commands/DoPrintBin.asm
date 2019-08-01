@@ -1,0 +1,4 @@
+proc DoPrintBin
+
+    ret
+endp

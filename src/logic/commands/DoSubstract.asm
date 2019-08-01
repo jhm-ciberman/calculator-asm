@@ -1,0 +1,4 @@
+proc DoSubstract
+
+    ret
+endp

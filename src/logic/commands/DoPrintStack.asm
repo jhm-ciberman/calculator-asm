@@ -1,4 +1,4 @@
-proc StackPrint
+proc DoPrintStack
     .while:
     fastcall ArrayListSize, [_lg_stack]
     cmp eax, 0

@@ -1,0 +1,4 @@
+proc DoXor
+
+    ret
+endp

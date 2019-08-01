@@ -5,7 +5,8 @@
 ;-----------------------------------------------
 
 
-; + los dos valores al tope de la pila, los retira y luego apila el resultado.-resta los valores al tope de la pila
+; + los dos valores al tope de la pila, los retira y luego apila el resultado.
+; - resta los valores al tope de la pila
 ; * multiplica los valores
 ; / divide los valores (resultado entero)
 ; % obtiene el resto de la division
@@ -28,23 +29,31 @@ section '.text' code readable executable
 
 include 'win64a.inc'
 include 'arraylist/include.asm'
-include 'logic/NewString.asm'
-include 'logic/PrintBinary.asm'
+
+include 'logic/commandparser/CommandParserInit.asm'
+include 'logic/commandparser/CommandParserProcessCommand.asm'
+
+include 'logic/commands/include.asm'
+
+include 'logic/conversion/PrintBinary.asm'
+include 'logic/conversion/StringToDecimal.asm'
+
+include 'logic/tokenizer/BufferAdd.asm'
+include 'logic/tokenizer/BufferFinish.asm'
+include 'logic/tokenizer/ParseString.asm'
+
 include 'logic/PrintString.asm'
-include 'logic/StringToDecimal.asm'
-include 'logic/BufferAdd.asm'
-include 'logic/BufferFinish.asm'
-include 'logic/ParseString.asm'
-include 'logic/StackPrint.asm'
 
 main:
     sub	rsp, 8		; Make stack dqword aligned
 
     fastcall ArrayListCreate, 20
     mov [_lg_stack], rax
+    
+    fastcall CommandParserInit
 
     fastcall ParseString, _lg_str_user
-    fastcall StackPrint
+    fastcall DoPrintStack
 
 	invoke exit, 0
     xor rax, rax
@@ -59,24 +68,19 @@ _format_input db "%[^\n]", 0                  ; TEST
 _format_s db "%s", 0                          ; TEST
 _format_d db "%d", 10, 0                          ; TEST
 
-; String buffer used to store the numbers while parsing
-_lg_buffer_str     rb 256
-_lg_buffer_length  dq 0
+include 'logic/commandparser/data.asm'
+include 'logic/tokenizer/data.asm'
 
-; Strings
-_lg_int dq ?                                  ; Integer
-
-
-_lg_str_user db "256 100 20",0                               ; Receives any string from main-graphic
+; string
+_lg_str_user db "256 100 20 +",0                               ; Receives any string from main-graphic
 _lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
 _lg_line_bk db 10, 0                          ;  line break 
 _lg_s0  db "0", 0                             ; '0' string
 _lg_s1  db "1", 0                             ; '1' string
-_lg_sA  db "PointA", 10, 0
-_lg_sB  db "PointB", 10, 0
-_lg_sC  db "PointC", 10, 0
 ;Stack
 _lg_stack dq 0                                ; Pointer to Stack
+
+
 
 section '.idata' data import readable
 

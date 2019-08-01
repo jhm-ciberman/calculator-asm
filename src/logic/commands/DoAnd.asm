@@ -1,0 +1,4 @@
+proc DoAnd
+
+    ret
+endp

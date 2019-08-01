@@ -1,0 +1,4 @@
+proc DoPrintHex
+
+    ret
+endp

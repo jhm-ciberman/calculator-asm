@@ -1,0 +1,4 @@
+proc DoMultiply
+
+    ret
+endp

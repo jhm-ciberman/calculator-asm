@@ -1,0 +1,4 @@
+proc DoNeg
+
+    ret
+endp

@@ -1,0 +1,4 @@
+proc DoNot
+
+    ret
+endp
