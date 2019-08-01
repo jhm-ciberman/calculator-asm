@@ -32,28 +32,19 @@ include 'logic/NewString.asm'
 include 'logic/PrintBinary.asm'
 include 'logic/PrintString.asm'
 include 'logic/StringToDecimal.asm'
+include 'logic/BufferAdd.asm'
+include 'logic/BufferFinish.asm'
 include 'logic/ParseString.asm'
+include 'logic/StackPrint.asm'
 
 main:
     sub	rsp, 8		; Make stack dqword aligned
 
-;AGREGAR LEER NUMEROS SEPARADOS POR ESPACIOS
-
-    fastcall PrintString, _numIn
- 
-    ;invoke scanf, _format_input, _lg_str_user
-
     fastcall ArrayListCreate, 20
     mov [_lg_stack], rax
 
-
     fastcall ParseString, _lg_str_user
-    ; fastcall ArrayListPop, [_lg_stack]
-    ; mov r14, rax
-    ; fastcall ArrayListPop, [_lg_stack]
-    ; add r14, rax
-    fastcall ArrayListPop, [_lg_stack]
-    invoke printf, _format_d, rax
+    fastcall StackPrint
 
 	invoke exit, 0
     xor rax, rax
@@ -66,11 +57,16 @@ _numIn db "Numero: ", 0                       ; TEST
 _format_output  TCHAR "El numero es ", 0      ; TEST
 _format_input db "%[^\n]", 0                  ; TEST
 _format_s db "%s", 0                          ; TEST
-_format_d db "%d", 0                          ; TEST
+_format_d db "%d", 10, 0                          ; TEST
+
+; String buffer used to store the numbers while parsing
+_lg_buffer_str     rb 256
+_lg_buffer_length  dq 0
 
 ; Strings
 _lg_int dq ?                                  ; Integer
-_lg_str_buffer rb 256                               ; Receives any string from main-graphic
+
+
 _lg_str_user db "256 100 20",0                               ; Receives any string from main-graphic
 _lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
 _lg_line_bk db 10, 0                          ;  line break 
