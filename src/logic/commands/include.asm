@@ -1,6 +1,7 @@
 include 'DoAdd.asm'
 include 'DoAnd.asm'
 include 'DoDivide.asm'
+include 'DoRemainder.asm'
 include 'DoMultiply.asm'
 include 'DoNeg.asm'
 include 'DoNot.asm'

@@ -14,6 +14,8 @@ proc CommandParserInit
     fastcall ArrayListPush, [_lg_commands_handlers], DoMultiply
     fastcall ArrayListPush, [_lg_commands_list], _lg_command_divide
     fastcall ArrayListPush, [_lg_commands_handlers], DoDivide
+    fastcall ArrayListPush, [_lg_commands_list], _lg_command_remainder
+    fastcall ArrayListPush, [_lg_commands_handlers], DoRemainder
     fastcall ArrayListPush, [_lg_commands_list], _lg_command_or
     fastcall ArrayListPush, [_lg_commands_handlers], DoOr
     fastcall ArrayListPush, [_lg_commands_list], _lg_command_and

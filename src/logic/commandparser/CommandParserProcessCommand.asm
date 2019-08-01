@@ -1,7 +1,7 @@
 ;;;
 ; Process a new string instruction. 
 ; The available recognized string commands are: 
-; "+", "-", "*", "/", "or", "and", "xor", "not", "neg" (case insensitive)
+; "+", "-", "*", "/", "%", "or", "and", "xor", "not", "neg" (case insensitive)
 ; any other string will be parsed as an integer and pushed onto the stack.
 ;;;
 proc CommandParserProcessCommand, string

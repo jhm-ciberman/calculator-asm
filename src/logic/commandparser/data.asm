@@ -3,6 +3,7 @@ _lg_command_add              db "+",0
 _lg_command_substract        db "-",0
 _lg_command_multiply         db "*",0
 _lg_command_divide           db "/",0
+_lg_command_remainder        db "%",0
 _lg_command_or               db "or",0
 _lg_command_and              db "and",0
 _lg_command_xor              db "xor",0
