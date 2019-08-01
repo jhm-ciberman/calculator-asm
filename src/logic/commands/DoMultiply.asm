@@ -4,9 +4,9 @@ proc DoMultiply uses r14
     mov r14, rax
 
     fastcall ArrayListPop, [_lg_stack]
-    imul r14, rax
+    imul r14
     
-    fastcall ArrayListPush, [_lg_stack], r14
+    fastcall ArrayListPush, [_lg_stack], rax
 
     ret
 endp
