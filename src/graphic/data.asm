@@ -6,7 +6,7 @@ _gr_str_console_cursor    TCHAR 219,0
 
 _gr_str_help_url          TCHAR 'https://github.com/jhm-ciberman/calculator-asm/blob/master/README.md',0
 _gr_str_showing_help      TCHAR 'Opening help in default web browser',0
-_gr_str_unknown           TCHAR 'Unknown command. Type help to see all commands',0
+_gr_str_unknown           TCHAR 'Unknown command.',10,'Type help to see all commands',0
 _gr_str_byebye            TCHAR 'Bye bye! ',1,0
 
 _gr_str_cmd_clear         TCHAR 'clear',0

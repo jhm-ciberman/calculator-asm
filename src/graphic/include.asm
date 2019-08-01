@@ -2,6 +2,7 @@
 include 'Main.asm'
 include 'ThreadProcessMessages.asm'
 
+include 'app/AppDrawConsoleLog.asm'
 include 'app/AppInit.asm'
 include 'app/AppUpdate.asm'
 include 'app/AppDrawInputLine.asm'
