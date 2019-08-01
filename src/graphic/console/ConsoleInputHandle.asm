@@ -1,4 +1,4 @@
-proc InputSend, input: QWORD
+proc ConsoleInputHandle, input: QWORD
     mov [input], rcx
 
     invoke strcmp, [input], _gr_str_cmd_exit
@@ -27,7 +27,7 @@ proc InputSend, input: QWORD
     jmp .done
 
     .cmd_clear:
-    ;fastcall ConsoleClear
+    fastcall ConsoleClear
     fastcall InputBufferClear
     ret
 
