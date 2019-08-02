@@ -1,6 +1,53 @@
 # calculator-asm
 Graphical REPL Calculator made in x64 assambly for Windows
 
+## Commands
+
+To execute a command type it and press enter:
+
+- `help`: Shows this readme file
+- `exit`: Closes the application
+- `zoom+`: Increases the GUI size
+- `zoom-`: Decreases the GUI size
+- `clear`: Clear the previous command log
+
+The calculator uses polish inverse notation. For example, you can type:
+
+```
+> 3 2 + .
+5
+```
+
+Explanation: This command introduces a `3` onto the stack, then a `2`. Then the `+` operation removes the last 
+two elements from the stack and add them together and push the result (`5`) back onto the stack. Lastly, 
+the `.` operator, removes the last element from the stack (`5`) and prints the result on the screen.
+
+The possible operands are the following:
+
+### Binary operators
+All binary operators remove the two values at the top of the stack, perform the operation and put the result back onto the stack.
+- `+` : Adition.
+- `-` : Substraction
+- `*` : Multiplication
+- `/` : Integer division
+- `%` : Integer division remainder
+- `OR` : Logic OR
+- `AND` : Logic AND
+- `XOR` : Logic XOR (Exclusive OR)
+
+### Unary operators
+Unary operators removes the topmost value from the stack and puts the result 
+back onto the stack.
+- `NOT` : Bitwise negation (Negates each bit of the integer)
+- `NEG` : Integer negation. If the number is positive, this calculate the negative, and if the number is negative this will convert it into a positive number.
+
+### Print operators
+This operators will print values in the console
+- `.` : Removes the topmost value of the stack and prints it on the screen in decimal
+- `.h` : Removes the topmost value of the stack and prints it on the screen in hexadecimal
+- `.b` : Removes the topmost value of the stack and prints it on the screen in binary
+- `s.` : Prints ALL the stack (from top to bottom) without consuming any value
+
 ## Building from source
 
 Setup Flat Assambler: 
