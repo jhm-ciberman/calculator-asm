@@ -18,6 +18,7 @@ _gr_message_type_help         TCHAR 34, '. ',10,'Type help to see all commands',
 _gr_message_byebye            TCHAR 'Bye bye! ',1,0
 _gr_message_unexpected        TCHAR 'Error: Unexpected character ', 34, 0
 _gr_message_at_input_string   TCHAR 34, ' at input string.', 0
+_gr_message_empty_stack       TCHAR '[Empty stack]', 0
 
 _gr_str_cmd_clear         TCHAR 'clear',0
 _gr_str_cmd_exit          TCHAR 'exit',0
