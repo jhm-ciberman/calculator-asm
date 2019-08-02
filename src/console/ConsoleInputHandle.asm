@@ -18,12 +18,12 @@ proc ConsoleInputHandle, input: QWORD
 
     .cmd_exit:
     invoke	PostQuitMessage,0
-    fastcall ConsolePrint, _gr_str_byebye
+    fastcall ConsolePrint, _gr_message_byebye
     jmp .done
 
     .cmd_help:
     invoke ShellExecute, 0, 0, _gr_str_help_url, 0, 0, SW_SHOW
-    fastcall ConsolePrint, _gr_str_showing_help
+    fastcall ConsolePrint, _gr_message_showing_help
     jmp .done
 
     .cmd_clear:

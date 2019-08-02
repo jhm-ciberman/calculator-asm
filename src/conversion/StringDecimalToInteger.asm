@@ -11,12 +11,14 @@ proc StringDecimalToInteger uses rbx, _str:QWORD ; _str saved in rcx
     .mainloop:
     ; r8b := str[rbx]
     mov r8b, byte [rcx + rbx]   ; Gets a character from the string
+    cmp r8b, 0
+    je .done
 
     ; if (dl >= '0' && dl <= '9')
     cmp r8b, '0'
-    jl .done
+    jl .error
     cmp r8b, '9'
-    jg .done
+    jg .error
 
     sub r8b, '0'                ; Current Byte - ASCII 48 = Decimal Number
 
@@ -29,6 +31,10 @@ proc StringDecimalToInteger uses rbx, _str:QWORD ; _str saved in rcx
     jmp .mainloop
     
     .done:
+    ret
+
+    .error:
+    fastcall ParserShowUnexpectedChar, r8b
     ret
 endp
 

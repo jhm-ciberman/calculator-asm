@@ -6,15 +6,18 @@ include 'window/data.asm'
 include 'conversion/data.asm'
 
 ; strings
-_gr_str_title             TCHAR 'Postfix calculator',0
+_gr_str_title             TCHAR 'Postfix calculator. Type ',34, 'help', 34, ' to see all commands.', 0
 _gr_str_error             TCHAR 'Startup failed.',0
 _gr_str_console_start     TCHAR 175,32,0
 _gr_str_console_cursor    TCHAR 219,0
 
-_gr_str_help_url          TCHAR 'https://github.com/jhm-ciberman/calculator-asm/blob/master/README.md',0
-_gr_str_showing_help      TCHAR 'Opening help in default web browser',0
-_gr_str_unknown           TCHAR 'Unknown command.',10,'Type help to see all commands',0
-_gr_str_byebye            TCHAR 'Bye bye! ',1,0
+_gr_str_help_url              TCHAR 'https://github.com/jhm-ciberman/calculator-asm/blob/master/README.md',0
+_gr_message_showing_help      TCHAR 'Opening help in default web browser',0
+_gr_message_unknown           TCHAR 'Unknown command ', 34, 0
+_gr_message_type_help         TCHAR 34, '. ',10,'Type help to see all commands',0
+_gr_message_byebye            TCHAR 'Bye bye! ',1,0
+_gr_message_unexpected        TCHAR 'Error: Unexpected character ', 34, 0
+_gr_message_at_input_string   TCHAR 34, ' at input string.', 0
 
 _gr_str_cmd_clear         TCHAR 'clear',0
 _gr_str_cmd_exit          TCHAR 'exit',0

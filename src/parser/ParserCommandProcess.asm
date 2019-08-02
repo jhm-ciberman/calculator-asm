@@ -36,8 +36,21 @@ proc ParserCommandProcess, string
     jmp .done
 
     .not_found:
+    mov rax, [string]
+    mov al, BYTE[rax]
+    cmp al, '0'
+    jl .is_not_number
+    cmp al, '9'
+    jg .is_not_number
+
     fastcall StringDecimalToInteger, [string]
     fastcall ArrayListPush, [_lg_stack], rax
+    ret
+    
+    .is_not_number:
+    fastcall ConsolePrint, _gr_message_unknown
+    fastcall ConsolePrint, [string]
+    fastcall ConsolePrint, _gr_message_type_help
 
     .done:
     ret
