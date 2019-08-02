@@ -37,5 +37,18 @@ proc AppDrawLogo
 
 	fastcall DrawPixelTextOutline, [x], [y], _gr_str_title, [_gr_col_title], [_gr_col_secondary]
 
+	add [y], 23
+
+	; x = (APP_WIDTH - strlen(_gr_str_subtitle) * 8) / 2
+	invoke strlen, _gr_str_subtitle
+	shl eax, 3
+	mov edx, eax
+	mov eax, [_gr_app_width]
+	sub eax, edx
+	shr eax, 1
+	mov [x], eax
+
+	fastcall DrawPixelText, [x], [y], _gr_str_subtitle, [_gr_col_muted]
+
     ret
 endp

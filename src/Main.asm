@@ -1,5 +1,5 @@
 proc Main
-    fastcall WindowCreate, 1024, 768, _gr_str_title
+    fastcall WindowCreate, 1024, 768, _gr_str_window_title
 	
 	test rax, rax
 	jz .error
