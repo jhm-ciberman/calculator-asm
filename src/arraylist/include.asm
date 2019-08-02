@@ -1,3 +1,4 @@
+include 'ArrayListClear.asm'
 include 'ArrayListCreate.asm'
 include 'ArrayListGet.asm'
 include 'ArrayListGetLast.asm'

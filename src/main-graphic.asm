@@ -6,6 +6,7 @@ include 'win64a.inc'
 section '.text' code readable executable
 
 include 'graphic/include.asm'
+include 'string/include.asm'
 include 'arraylist/include.asm'
 
 start:
