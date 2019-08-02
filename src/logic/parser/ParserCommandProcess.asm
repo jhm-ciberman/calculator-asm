@@ -4,7 +4,7 @@
 ; "+", "-", "*", "/", "%", "or", "and", "xor", "not", "neg" (case insensitive)
 ; any other string will be parsed as an integer and pushed onto the stack.
 ;;;
-proc CommandParserProcessCommand, string
+proc ParserCommandProcess, string
     local i:DWORD, size:DWORD
     mov [string], rcx
     mov [i], 0

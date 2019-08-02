@@ -1,4 +1,8 @@
-proc BufferFinish
+;;;
+; Process the contents of the command buffer and executes the asociated command
+; If the buffer is empty, this function does nothing
+;;;
+proc ParserCommandFinish
 
     ; if (buffi != 0)
     mov rdx, [_lg_buffer_length]

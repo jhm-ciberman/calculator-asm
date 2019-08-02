@@ -29,19 +29,11 @@ section '.text' code readable executable
 
 include 'win64a.inc'
 include 'arraylist/include.asm'
-
-include 'logic/commandparser/CommandParserInit.asm'
-include 'logic/commandparser/CommandParserProcessCommand.asm'
-
+include 'logic/parser/include.asm'
 include 'logic/commands/include.asm'
-
 include 'logic/conversion/PrintBinary.asm'
+include 'logic/conversion/PrintHexa.asm'
 include 'logic/conversion/StringToDecimal.asm'
-
-include 'logic/tokenizer/BufferAdd.asm'
-include 'logic/tokenizer/BufferFinish.asm'
-include 'logic/tokenizer/ParseString.asm'
-
 include 'logic/PrintString.asm'
 
 main:
@@ -50,9 +42,9 @@ main:
     fastcall ArrayListCreate, 20
     mov [_lg_stack], rax
     
-    fastcall CommandParserInit
+    fastcall ParserInit
 
-    fastcall ParseString, _lg_str_user
+    fastcall ParserParseString, _lg_str_user
     fastcall DoPrintStack
 
 	invoke exit, 0
@@ -68,8 +60,7 @@ _format_input db "%[^\n]", 0                  ; TEST
 _format_s db "%s", 0                          ; TEST
 _format_d db "%d", 10, 0                          ; TEST
 
-include 'logic/commandparser/data.asm'
-include 'logic/tokenizer/data.asm'
+include 'logic/parser/data.asm'
 
 ; string
 _lg_str_user db "256 100 20 +",0                               ; Receives any string from main-graphic

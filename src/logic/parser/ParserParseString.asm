@@ -4,7 +4,7 @@
 ; Pseudocode: https://repl.it/repls/OutrageousHeftyPhases
 ;------------------------------------------------------------------------
 
-proc ParseString uses rbx, _str:QWORD ; _str saved in rcx
+proc ParserParseString uses rbx, _str:QWORD ; _str saved in rcx
     local _i:QWORD
 
     mov [_str], rcx            ; The String
@@ -23,12 +23,12 @@ proc ParseString uses rbx, _str:QWORD ; _str saved in rcx
     cmp r8b, 32
     je .is_space
 
-    fastcall BufferAdd, r8b
+    fastcall ParserCommandAddChar, r8b
 
     jmp .buffer_is_empty
 
     .is_space:
-    fastcall BufferFinish
+    fastcall ParserCommandFinish
 
     .buffer_is_empty:
     ; cc = str[++i];

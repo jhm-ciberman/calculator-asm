@@ -1,0 +1,5 @@
+include 'ParserCommandAddChar.asm'
+include 'ParserCommandFinish.asm'
+include 'ParserCommandProcess.asm'
+include 'ParserInit.asm'
+include 'ParserParseString.asm'

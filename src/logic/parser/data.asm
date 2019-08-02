@@ -16,3 +16,7 @@ _lg_command_print_stack      db "s.",0
 
 _lg_commands_list     dq 0 ; List with all available commands strings
 _lg_commands_handlers dq 0 ; List with the handlers asociated to each command
+
+; String buffer used to store the numbers while parsing
+_lg_buffer_str     rb 256
+_lg_buffer_length  dq 0
