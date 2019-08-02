@@ -63,7 +63,7 @@ _format_d db "%d", 10, 0                          ; TEST
 include 'logic/parser/data.asm'
 
 ; string
-_lg_str_user db "256 100 20 +",0                               ; Receives any string from main-graphic
+_lg_str_user db "10 10 +",0                               ; Receives any string from main-graphic
 _lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
 _lg_line_bk db 10, 0                          ;  line break 
 _lg_s0  db "0", 0                             ; '0' string

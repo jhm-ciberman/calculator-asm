@@ -14,7 +14,7 @@ proc ParserCommandFinish
     ; buffi = 0
     mov [_lg_buffer_length], 0
 
-    fastcall CommandParserProcessCommand, _lg_buffer_str
+    fastcall ParserCommandProcess, _lg_buffer_str
 
     .done:
     ret

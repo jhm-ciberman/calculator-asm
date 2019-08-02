@@ -1,4 +1,4 @@
-proc CommandParserInit
+proc ParserInit
 
     ; Create two parallel lists
     fastcall ArrayListCreate, 15

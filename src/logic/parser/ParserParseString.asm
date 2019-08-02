@@ -42,7 +42,7 @@ proc ParserParseString uses rbx, _str:QWORD ; _str saved in rcx
 
     .end_main_loop:
 
-    fastcall BufferFinish
+    fastcall ParserCommandFinish
 
     .done:
     ret
