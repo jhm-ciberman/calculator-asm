@@ -36,7 +36,7 @@ proc ParserCommandProcess, string
     jmp .done
 
     .not_found:
-    fastcall StringToDecimal, [string]
+    fastcall StringDecimalToInteger, [string]
     fastcall ArrayListPush, [_lg_stack], rax
 
     .done:

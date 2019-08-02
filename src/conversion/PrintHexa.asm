@@ -40,7 +40,7 @@ proc PrintHexa uses rax rcx rdx r14 , _int:QWORD ; _int saved in rcx
     cmp eax, 0
     je .done
     fastcall ArrayListPop, [_array]
-    invoke printf, _format_c, al
+    fastcall ConsolePrintChar, al
     jmp .print
 
     .done:

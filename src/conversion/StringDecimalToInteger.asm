@@ -2,7 +2,7 @@
 ; Converts _str from String to Decimal
 ; Used to cast Strings to Decimal
 ;;;
-proc StringToDecimal uses rbx, _str:QWORD ; _str saved in rcx
+proc StringDecimalToInteger uses rbx, _str:QWORD ; _str saved in rcx
     mov [_str], rcx            ; The String   
     xor rax,rax                ; The output value
     xor r8,r8                  ; Current character

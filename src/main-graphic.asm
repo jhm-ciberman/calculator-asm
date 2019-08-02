@@ -5,9 +5,17 @@ include 'win64a.inc'
 
 section '.text' code readable executable
 
-include 'graphic/include.asm'
-include 'string/include.asm'
+include 'app/include.asm'
 include 'arraylist/include.asm'
+include 'commands/include.asm'
+include 'console/include.asm'
+include 'conversion/include.asm'
+include 'draw/include.asm'
+include 'io/include.asm'
+include 'parser/include.asm'
+include 'string/include.asm'
+include 'window/include.asm'
+include 'Main.asm'
 
 start:
 	sub	rsp,8		; Make stack dqword aligned
@@ -15,7 +23,7 @@ start:
 
 section '.data' data readable writeable
 
-include 'graphic/data.asm'
+include 'data.asm'
 
 section '.idata' import data readable writeable
 
@@ -37,4 +45,5 @@ section '.idata' import data readable writeable
 		realloc, 'realloc', \
 		strcpy, 'strcpy', \
 		free, 'free', \
-		strcmp, 'strcmp'
+		strcmp, 'strcmp', \
+		sprintf, 'sprintf'

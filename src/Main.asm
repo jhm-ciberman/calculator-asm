@@ -22,7 +22,7 @@ proc Main
 
     ; Process all the incoming messages
     ; if the thread receives an exit message, this method returns 0
-	fastcall ThreadProcessMessages
+	fastcall AppThreadProcessMessages
     test rax, rax
     je .exitapp
     
@@ -40,7 +40,7 @@ proc Main
     jmp .mainloop
 
   	.error:
-	invoke	MessageBox,NULL,_gr_str_error,NULL,MB_ICONERROR+MB_OK
+	invoke MessageBox,NULL,_gr_str_error,NULL,MB_ICONERROR+MB_OK
 	invoke DestroyWindow,[_gr_whandle]
 	invoke ExitProcess,[_gr_msg.wParam]
     ret

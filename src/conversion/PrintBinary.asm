@@ -14,16 +14,16 @@ xor rdx, rdx
     jz .zero
 
     shl rcx, 1
-    mov rdx, _lg_s1     ; Prints '1'
+    mov rdx, 49     ; Prints '1' = ascii 49
     jmp .eval
 
 .zero:
     shl rcx, 1
-    mov rdx, _lg_s0     ; Prints '0'
+    mov rdx, 48     ; Prints '0'  = ascii 48
 
 .eval:
     push rcx rax rbx
-    fastcall PrintString, rdx
+    fastcall ConsolePrintChar, dl
     pop rbx rax rcx
     add rax, 1
     jnz .mainloop

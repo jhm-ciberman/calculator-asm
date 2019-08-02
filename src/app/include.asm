@@ -1,0 +1,7 @@
+include 'AppDrawConsoleLog.asm'
+include 'AppInit.asm'
+include 'AppUpdate.asm'
+include 'AppDrawInputLine.asm'
+include 'AppDrawLogo.asm'
+include 'AppRecalculateWindowSize.asm'
+include 'AppThreadProcessMessages.asm'

@@ -5,7 +5,7 @@
 ; returns: (QWORD) 1 if all is ok. 0 if the app must be closed.
 ;;;
 align 16
-proc ThreadProcessMessages
+proc AppThreadProcessMessages
 
     ; while loop
     .peekmessage:

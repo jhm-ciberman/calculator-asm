@@ -29,12 +29,10 @@ section '.text' code readable executable
 
 include 'win64a.inc'
 include 'arraylist/include.asm'
-include 'logic/parser/include.asm'
-include 'logic/commands/include.asm'
-include 'logic/conversion/PrintBinary.asm'
-include 'logic/conversion/PrintHexa.asm'
-include 'logic/conversion/StringToDecimal.asm'
-include 'logic/PrintString.asm'
+include 'parser/include.asm'
+include 'commands/include.asm'
+include 'conversion/include.asm'
+include 'fakeconsole/include.asm'
 
 main:
     sub	rsp, 8		; Make stack dqword aligned
@@ -43,7 +41,7 @@ main:
     mov [_lg_stack], rax
     
     fastcall ParserInit
-
+    
     fastcall ParserParseString, _lg_str_user
     fastcall DoPrintStack
 
@@ -53,26 +51,14 @@ main:
 
 section '.data' data readable writeable
 
-; Test
-_numIn db "Numero: ", 0                       ; TEST
-_format_output  TCHAR "El numero es ", 0      ; TEST
-_format_input db "%[^\n]", 0                  ; TEST
-_format_s db "%s", 0                          ; TEST
-_format_d db "%d", 10, 0                          ; TEST
-_format_c db "%c", 0                          ; TEST
+include 'fakeconsole/data.asm'
+include 'parser/data.asm'
+include 'conversion/data.asm'
 
-include 'logic/parser/data.asm'
-
-; string
-_lg_str_user db "125 .h",0                               ; Receives any string from main-graphic
-_lg_str_ok  db "Ok", 10, 0                    ; 'Ok' string
-_lg_line_bk db 10, 0                          ;  line break 
-_lg_s0  db "0", 0                             ; '0' string
-_lg_s1  db "1", 0                             ; '1' string
-;Stack
+_lg_str_user db "100 101 102 103",0                    ; Receives any string from main-graphic
 _lg_stack dq 0                                ; Pointer to Stack
-
-
+_lg_debug db "hola!",0
+_format_d db "%d",10,0
 
 section '.idata' data import readable
 
@@ -86,4 +72,5 @@ section '.idata' data import readable
 		realloc, 'realloc', \
 		strcpy, 'strcpy', \
 		free, 'free', \
-		strcmp, 'strcmp'
+		strcmp, 'strcmp', \
+		sprintf, 'sprintf'

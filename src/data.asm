@@ -1,3 +1,10 @@
+include 'console/data.asm'
+include 'draw/data.asm'
+include 'io/data.asm'
+include 'parser/data.asm'
+include 'window/data.asm'
+include 'conversion/data.asm'
+
 ; strings
 _gr_str_title             TCHAR 'Postfix calculator',0
 _gr_str_error             TCHAR 'Startup failed.',0
@@ -40,11 +47,6 @@ _gr_appbuffer      dq 0  ; A pointer to the application virtual framebuffer (sma
 
 ; System time
 _gr_system_time    SYSTEMTIME                       ; The current system time
-
-include 'console/data.asm'
-include 'window/data.asm'
-include 'io/data.asm'
-include 'draw/data.asm'
 
 _gr_logo_w     dd 16
 _gr_logo_h     dd 16
