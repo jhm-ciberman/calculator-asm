@@ -13,7 +13,7 @@ proc ConsoleInputHandle, input: QWORD
     test eax, eax
     je .cmd_clear
     
-    fastcall ConsolePrint, _gr_str_unknown
+    fastcall ParserParseString, [input]
     jmp .done
 
     .cmd_exit:

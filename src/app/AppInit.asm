@@ -3,5 +3,6 @@
 ;;;
 proc AppInit
     fastcall ConsoleInit
+    fastcall ParserInit
 	ret
 endp

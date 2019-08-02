@@ -20,3 +20,6 @@ _lg_commands_handlers dq 0 ; List with the handlers asociated to each command
 ; String buffer used to store the numbers while parsing
 _lg_buffer_str     rb 256
 _lg_buffer_length  dq 0
+
+; Stack used by the calculator
+_lg_stack dq 0

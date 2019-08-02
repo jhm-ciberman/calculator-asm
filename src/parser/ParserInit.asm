@@ -1,5 +1,9 @@
 proc ParserInit
 
+    ; The stack used by the calculator
+    fastcall ArrayListCreate, 20
+    mov [_lg_stack], rax
+
     ; Create two parallel lists
     fastcall ArrayListCreate, 15
     mov [_lg_commands_list], rax
