@@ -1,6 +1,10 @@
 # calculator-asm
 Graphical REPL Calculator made in x64 assambly for Windows
 
+## Download
+
+To download a binary for Windows check the [Releases page](https://github.com/jhm-ciberman/calculator-asm/releases).
+
 ## Commands
 
 To execute a command type it and press enter. All commands are **case insensitive**: 
