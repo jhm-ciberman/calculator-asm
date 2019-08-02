@@ -19,10 +19,14 @@ _gr_message_byebye            TCHAR 'Bye bye! ',1,0
 _gr_message_unexpected        TCHAR 'Error: Unexpected character ', 34, 0
 _gr_message_at_input_string   TCHAR 34, ' at input string.', 0
 _gr_message_empty_stack       TCHAR '[Empty stack]', 0
+_gr_message_maximum_zoom      TCHAR 'Maximum zoom level reached.', 0
+_gr_message_minimum_zoom      TCHAR 'Minimum zoom level reached.', 0
 
 _gr_str_cmd_clear         TCHAR 'clear',0
 _gr_str_cmd_exit          TCHAR 'exit',0
 _gr_str_cmd_help          TCHAR 'help',0
+_gr_str_cmd_zoomplus      TCHAR 'zoom+',0
+_gr_str_cmd_zoomminus     TCHAR 'zoom-',0
 
 ; colours
 _gr_col_primary       dd $ffff2222
@@ -35,8 +39,10 @@ _gr_col_background    dd $ff222222
 ; layout
 _gr_win_width         dd 0  ; The width of the client area of the window
 _gr_win_height        dd 0  ; The height of the client area of the window
-_gr_pixel_scale_x     dd 4
-_gr_pixel_scale_y     dd 4
+_gr_pixel_scale_x     dd 3
+_gr_pixel_scale_y     dd 3
+_gr_pixel_scale_min   dd 1
+_gr_pixel_scale_max   dd 5
 _gr_app_width         dd 0  ; The width of the app virtual buffer
 _gr_app_height        dd 0  ; The height of the app virtual buffer
 _gr_margin_bottom     db 5

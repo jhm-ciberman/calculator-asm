@@ -8,6 +8,7 @@ section '.text' code readable executable
 include 'app/include.asm'
 include 'arraylist/include.asm'
 include 'commands/include.asm'
+include 'commands/gui/include.asm'
 include 'console/include.asm'
 include 'conversion/include.asm'
 include 'draw/include.asm'

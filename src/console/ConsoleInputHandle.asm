@@ -4,32 +4,41 @@ proc ConsoleInputHandle, input: QWORD
     invoke strcmp, [input], _gr_str_cmd_exit
     test eax, eax
     je .cmd_exit
-
     invoke strcmp, [input], _gr_str_cmd_help
     test eax, eax
     je .cmd_help
-
     invoke strcmp, [input], _gr_str_cmd_clear
     test eax, eax
     je .cmd_clear
-    
+    invoke strcmp, [input], _gr_str_cmd_zoomplus
+    test eax, eax
+    je .cmd_zoomplus
+    invoke strcmp, [input], _gr_str_cmd_zoomminus
+    test eax, eax
+    je .cmd_zoomminus
+    ;default
     fastcall ParserParseString, [input]
     jmp .done
 
     .cmd_exit:
-    invoke	PostQuitMessage,0
-    fastcall ConsolePrint, _gr_message_byebye
+    fastcall DoExit
     jmp .done
 
     .cmd_help:
-    invoke ShellExecute, 0, 0, _gr_str_help_url, 0, 0, SW_SHOW
-    fastcall ConsolePrint, _gr_message_showing_help
+    fastcall DoHelp
     jmp .done
 
     .cmd_clear:
-    fastcall InputBufferClear
-    fastcall OutputBufferClear
-    fastcall ConsoleClear
+    fastcall DoClear
+    jmp .done
+
+    .cmd_zoomplus:
+    fastcall DoZoomPlus
+    jmp .done
+
+    .cmd_zoomminus:
+    fastcall DoZoomMinus
+    jmp .done
 
     .done:
     fastcall ConsoleFlushBuffers
