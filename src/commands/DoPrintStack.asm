@@ -12,6 +12,7 @@ proc DoPrintStack
 
     fastcall ArrayListGet, [_lg_stack], [size]
     fastcall PrintDecimal, rax
+    fastcall ConsolePrintChar, 10
 
     jmp .while
     .endwhile:
