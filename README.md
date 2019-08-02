@@ -5,15 +5,7 @@ Graphical REPL Calculator made in x64 assambly for Windows
 
 To download a binary for Windows check the [Releases page](https://github.com/jhm-ciberman/calculator-asm/releases).
 
-## Commands
-
-To execute a command type it and press enter. All commands are **case insensitive**: 
-
-- `help`: Shows this readme file
-- `exit`: Closes the application
-- `zoom+`: Increases the GUI size
-- `zoom-`: Decreases the GUI size
-- `clear`: Clear the previous command log
+## Usage
 
 The calculator uses polish inverse notation. For example, you can type:
 
@@ -25,6 +17,19 @@ The calculator uses polish inverse notation. For example, you can type:
 Explanation: This command introduces a `3` onto the stack, then a `2`. Then the `+` operation removes the last 
 two elements from the stack and add them together and push the result (`5`) back onto the stack. Lastly, 
 the `.` operator, removes the last element from the stack (`5`) and prints the result on the screen.
+
+You can scroll though the log using `PageUp` and `PageDown` keys. You can use the `End` key to scroll to the end of the log.
+
+## Commands
+
+To execute a command type it and press enter. All commands are **case insensitive**: 
+
+- `man`: Shows the offline command documentation
+- `help`: Shows this readme file
+- `exit`: Closes the application
+- `zoom+`: Increases the GUI size
+- `zoom-`: Decreases the GUI size
+- `clear`: Clear the previous command log
 
 The possible operands are the following:
 
