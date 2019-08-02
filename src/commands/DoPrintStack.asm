@@ -3,6 +3,8 @@ proc DoPrintStack
 
     fastcall ArrayListSize, [_lg_stack]
     mov [size], eax
+    cmp eax, 0
+    je .empty_stack
 
     .while:
     cmp [size], 0
@@ -16,6 +18,9 @@ proc DoPrintStack
 
     jmp .while
     .endwhile:
+    ret
 
+    .empty_stack:
+    fastcall ConsolePrint, _gr_message_empty_stack
     ret
 endp
