@@ -51,7 +51,7 @@
 				"echo": true,
 				"reveal": "always",
 				"focus": true,
-				"clear": true
+				"clear": false
 			},
 			"problemMatcher": {
 				"fileLocation": "absolute",
