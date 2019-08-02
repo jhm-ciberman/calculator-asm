@@ -1,5 +1,6 @@
 include 'DoClear.asm'
 include 'DoExit.asm'
 include 'DoHelp.asm'
+include 'DoMan.asm'
 include 'DoZoomPlus.asm'
 include 'DoZoomMinus.asm'

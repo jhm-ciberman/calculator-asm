@@ -1,0 +1,20 @@
+help   Opens the online documentation
+man    Shows this help
+exit   Closes the application
+zoom+  Increases the GUI size
+zoom-  Decreases the GUI size
+clear  Clear the previous command log
++      Adition.
+-      Substraction
+*      Multiplication
+/      Integer division
+%      Integer division remainder
+OR     Logic OR
+AND    Logic AND
+XOR    Logic XOR (Exclusive OR)
+NOT    Bitwise negation (Negates each bit of the integer)
+NEG    Integer negation.
+.      Removes and prints the last value in decimal
+.h     Removes and prints the last value in hexadecimal
+.b     Removes and prints the last value in binary
+s.     Prints ALL the stack without consuming any value

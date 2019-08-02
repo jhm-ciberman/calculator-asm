@@ -29,6 +29,8 @@ proc DrawPixelText, x:DWORD, y:DWORD, string:QWORD, colour:DWORD
 
     cmp al, 10 ; if it's a LF character
     je .linefeed
+    cmp al, 13 ; if it's a CR character
+    je .skipdraw
 
     fastcall DrawPixelChar, [x], [y], al, [colour]
 

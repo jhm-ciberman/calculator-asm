@@ -10,6 +10,8 @@ proc AppInit
     fastcall ArrayListPush, [_lg_commands_handlers], DoExit
     fastcall ArrayListPush, [_lg_commands_list], _gr_str_cmd_help
     fastcall ArrayListPush, [_lg_commands_handlers], DoHelp
+    fastcall ArrayListPush, [_lg_commands_list], _gr_str_cmd_man
+    fastcall ArrayListPush, [_lg_commands_handlers], DoMan
     fastcall ArrayListPush, [_lg_commands_list], _gr_str_cmd_clear
     fastcall ArrayListPush, [_lg_commands_handlers], DoClear
     fastcall ArrayListPush, [_lg_commands_list], _gr_str_cmd_zoomplus

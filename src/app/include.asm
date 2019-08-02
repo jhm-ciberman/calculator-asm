@@ -1,5 +1,7 @@
 include 'AppDrawConsoleLog.asm'
 include 'AppInit.asm'
+include 'AppLogOffsetIncrement.asm'
+include 'AppLogOffsetReset.asm'
 include 'AppUpdate.asm'
 include 'AppDrawInputLine.asm'
 include 'AppDrawLogo.asm'
