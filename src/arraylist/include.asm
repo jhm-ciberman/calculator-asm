@@ -1,5 +1,6 @@
 include 'ArrayListClear.asm'
 include 'ArrayListCreate.asm'
+include 'ArrayListFree.asm'
 include 'ArrayListGet.asm'
 include 'ArrayListGetLast.asm'
 include 'ArrayListPop.asm'

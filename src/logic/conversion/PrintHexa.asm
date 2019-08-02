@@ -44,6 +44,7 @@ proc PrintHexa uses rax rcx rdx r14 , _int:QWORD ; _int saved in rcx
     jmp .print
 
     .done:
+    fastcall ArrayListFree, [_array]
     ret
 
 endp
