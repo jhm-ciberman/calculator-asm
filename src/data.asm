@@ -31,8 +31,8 @@ _gr_col_background    dd $ff222222
 ; layout
 _gr_win_width         dd 0  ; The width of the client area of the window
 _gr_win_height        dd 0  ; The height of the client area of the window
-_gr_pixel_scale_x     dd 2
-_gr_pixel_scale_y     dd 2
+_gr_pixel_scale_x     dd 4
+_gr_pixel_scale_y     dd 4
 _gr_app_width         dd 0  ; The width of the app virtual buffer
 _gr_app_height        dd 0  ; The height of the app virtual buffer
 _gr_margin_bottom     db 5

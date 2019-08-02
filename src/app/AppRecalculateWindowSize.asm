@@ -9,12 +9,14 @@ proc AppRecalculateWindowSize
 	xor edx, edx
 	; app_width = win_width / pixel_scale_x
 	mov eax, [_gr_win_width]
-	div [_gr_pixel_scale_x]
+	cdq
+	idiv [_gr_pixel_scale_x]
 	mov [_gr_app_width], eax
 
 	; app_height = win_height / pixel_scale_y
 	mov eax, [_gr_win_height]
-	div [_gr_pixel_scale_y]
+	cdq
+	idiv [_gr_pixel_scale_y]
 	mov [_gr_app_height], eax
 
 	; Initialize bmi

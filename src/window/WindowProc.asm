@@ -36,7 +36,7 @@ proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
 	;je      .wmexitsizemove
 	cmp     edx,WM_SIZE
 	je      .wmexitsizemove
-	
+
 	.defwndproc:
 	; if noone of the event types match, pass the event handling to the OS
 	invoke	DefWindowProc,rcx,rdx,r8,r9

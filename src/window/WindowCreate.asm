@@ -48,7 +48,7 @@ proc WindowCreate, width:QWORD, height:QWORD, title:QWORD
         0, \                                                ; Optional window styles
         _gr_str_class, \                                    ; Window class name
         [title], \                                          ; Window title
-        WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU+WS_MAXIMIZEBOX, \     ; Window style
+        WS_VISIBLE+WS_DLGFRAME+WS_SYSMENU+WS_MAXIMIZEBOX+WS_SIZEBOX, \     ; Window style
         CW_USEDEFAULT, \                                    ; Position x
         CW_USEDEFAULT, \                                    ; Position y
         [width], \                                          ; Size width
