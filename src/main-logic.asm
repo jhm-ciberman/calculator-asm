@@ -52,8 +52,11 @@ include 'parser/data.asm'
 include 'conversion/data.asm'
 
 _lg_str_user db "100 101 + + + 102 103 . . . s.",0                    ; Receives any string from main-graphic
-_lg_debug db "hola!",0
-_format_d db "%d",10,0
+_gr_message_unknown           db 'Unknown command ', 34, 0
+_gr_message_type_help         db 34, '. ',10,'Type help to see all commands',0
+_gr_message_unexpected        db 'Error: Unexpected character ', 34, 0
+_gr_message_at_input_string   db 34, ' at input string.', 0
+_gr_message_empty_stack       db '[Empty stack]', 0
 
 section '.idata' data import readable
 
