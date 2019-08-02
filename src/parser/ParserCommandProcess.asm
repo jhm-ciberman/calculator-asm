@@ -9,6 +9,8 @@ proc ParserCommandProcess, string
     mov [string], rcx
     mov [i], 0
 
+    fastcall StringToLower, rcx
+
     fastcall ArrayListSize,[_lg_commands_list]
     mov [size], eax   
 

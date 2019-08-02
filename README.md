@@ -3,7 +3,7 @@ Graphical REPL Calculator made in x64 assambly for Windows
 
 ## Commands
 
-To execute a command type it and press enter:
+To execute a command type it and press enter. All commands are **case insensitive**: 
 
 - `help`: Shows this readme file
 - `exit`: Closes the application
