@@ -5,11 +5,13 @@
 ; any other string will be parsed as an integer and pushed onto the stack.
 ;;;
 proc ParserCommandProcess, string
-    local i:DWORD, size:DWORD
+    local i:DWORD, size:DWORD, lowercase_string:QWORD
     mov [string], rcx
     mov [i], 0
 
-    fastcall StringToLower, rcx
+    fastcall StringClone, [string]
+    mov [lowercase_string], rax
+    fastcall StringToLower, [lowercase_string]
 
     fastcall ArrayListSize,[_lg_commands_list]
     mov [size], eax   
@@ -20,7 +22,7 @@ proc ParserCommandProcess, string
     jge .not_found 
 
     fastcall ArrayListGet,[_lg_commands_list], [i]
-    invoke strcmp, rax, [string]
+    invoke strcmp, rax, [lowercase_string]
 
     cmp rax, 0
     jne .not_equals
@@ -38,7 +40,7 @@ proc ParserCommandProcess, string
     jmp .done
 
     .not_found:
-    mov rax, [string]
+    mov rax, [lowercase_string]
     mov al, BYTE[rax]
     cmp al, '0'
     jl .is_not_number
@@ -47,7 +49,7 @@ proc ParserCommandProcess, string
 
     fastcall StringDecimalToInteger, [string]
     fastcall ArrayListPush, [_lg_stack], rax
-    ret
+    jmp .done
     
     .is_not_number:
     fastcall ConsolePrint, _gr_message_unknown
@@ -55,5 +57,6 @@ proc ParserCommandProcess, string
     fastcall ConsolePrint, _gr_message_type_help
 
     .done:
+    invoke free, [lowercase_string]
     ret
 endp
