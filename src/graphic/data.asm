@@ -43,7 +43,7 @@ _gr_system_time    SYSTEMTIME                       ; The current system time
 
 include 'console/data.asm'
 include 'window/data.asm'
-include 'input/data.asm'
+include 'io/data.asm'
 include 'draw/data.asm'
 
 _gr_logo_w     dd 16

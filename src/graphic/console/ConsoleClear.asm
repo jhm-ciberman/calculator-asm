@@ -1,3 +1,6 @@
+;;;
+; Clears all the console log
+;;;
 proc ConsoleClear
     local size:DWORD
     fastcall ArrayListSize, [_gr_log_input]

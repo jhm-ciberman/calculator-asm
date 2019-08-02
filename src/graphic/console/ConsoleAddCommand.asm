@@ -1,3 +1,10 @@
+;;;
+; Adds a command into the console log
+;
+; params:
+;   str_input  - The input string (what the user typed)
+;   str_output - The output string (The command response)
+;;;
 proc ConsoleAddCommand, str_input:QWORD, str_output:QWORD
     mov [str_input], rcx
     mov [str_output], rdx
