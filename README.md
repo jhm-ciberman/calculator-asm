@@ -1,6 +1,8 @@
 # calculator-asm
 Graphical REPL Calculator made in x64 assambly for Windows
 
+![Postfix Calculator main screen](images/mainscreen.png)
+
 ## Download
 
 To download a binary for Windows check the [releases page](https://github.com/jhm-ciberman/calculator-asm/releases).
