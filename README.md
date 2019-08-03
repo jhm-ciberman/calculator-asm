@@ -3,7 +3,9 @@ Graphical REPL Calculator made in x64 assambly for Windows
 
 ## Download
 
-To download a binary for Windows check the [Releases page](https://github.com/jhm-ciberman/calculator-asm/releases).
+To download a binary for Windows check the [releases page](https://github.com/jhm-ciberman/calculator-asm/releases).
+
+To download a complete PDF manual (In spanish) [click here](https://github.com/jhm-ciberman/calculator-asm/raw/master/ManualdeUsuarioPostfixCalculator.pdf).
 
 ## Usage
 
