@@ -10,6 +10,7 @@ _gr_str_window_title      TCHAR 'Postfix calculator. Type ',34, 'help', 34, ' or
 _gr_str_title             TCHAR 'Postfix calculator', 0
 _gr_str_subtitle          TCHAR 'Type ',34,'help',34, ' to open the manual', 0
 _gr_str_error             TCHAR 'Startup failed.',0
+_gr_str_resiconname       TCHAR 'main_icon',0
 _gr_str_console_start     TCHAR 175,32,0
 _gr_str_console_cursor    TCHAR 219,0
 

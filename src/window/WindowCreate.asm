@@ -30,7 +30,7 @@ proc WindowCreate, width:QWORD, height:QWORD, title:QWORD
 	mov	[_gr_wc.hInstance],rax
 
     ; Load the default icon (hIcon and hIconSm)
-	invoke	LoadIcon,0,IDI_APPLICATION
+	invoke	LoadIcon,[_gr_wc.hInstance],2
 	mov	[_gr_wc.hIcon],rax
 	mov	[_gr_wc.hIconSm],rax
 
