@@ -20,7 +20,8 @@ Explanation: This command introduces a `3` onto the stack, then a `2`. Then the 
 two elements from the stack and add them together and push the result (`5`) back onto the stack. Lastly, 
 the `.` operator, removes the last element from the stack (`5`) and prints the result on the screen.
 
-You can scroll though the log using `PageUp` and `PageDown` keys. You can use the `End` key to scroll to the end of the log.
+You can scroll though the log using `PageUp` and `PageDown` keys or with the mouse wheel. 
+You can use the `End` key to scroll to the end of the log.
 
 ## Commands
 
