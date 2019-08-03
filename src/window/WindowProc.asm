@@ -34,6 +34,8 @@ proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
 	je      .wmkeydown
 	cmp     edx,WM_CHAR
 	je      .wmchar
+	cmp     edx,WM_MOUSEWHEEL
+	je      .wmmousewheel
 	;cmp     edx,WM_EXITSIZEMOVE
 	;je      .wmexitsizemove
 	cmp     edx,WM_SIZE
@@ -68,6 +70,13 @@ proc WindowProc uses rbx rsi rdi, hwnd,wmsg,wparam,lparam
 
 	.wmkeydown:
 	fastcall InputOnKeyDown, r8
+	xor eax, eax
+	ret
+
+	.wmmousewheel:
+	shr r8, 16
+	and r8, $ffff
+	fastcall InputOnMouseWheel, r8
 	xor eax, eax
 	ret
 
